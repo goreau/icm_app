@@ -6,7 +6,7 @@ class Principal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sisamob vs.3'),
+        title: Text('ICM App'),
       ),
       body: new Container(
         color: Colors.grey[200],
@@ -26,7 +26,7 @@ class Principal extends StatelessWidget {
                     title: Text('ICM App'),
                     subtitle: Text('Condição de Moradias'),
                   ),
-                  decoration: BoxDecoration(color: Colors.greenAccent),
+                  decoration: BoxDecoration(color: Colors.teal),
                 ),
               ),
               Container(
@@ -74,30 +74,6 @@ class Principal extends StatelessWidget {
                   leading: Icon(Icons.assignment_outlined),
                   title: Text(
                     'Consultar',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  onTap: () {},
-                ),
-              ),
-              Container(
-                height: 40,
-                child: ListTile(
-                  leading: Icon(Icons.my_location_outlined),
-                  title: Text(
-                    'Atualizar Coordenadas',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(Routes.VISITA);
-                  },
-                ),
-              ),
-              Container(
-                height: 40,
-                child: ListTile(
-                  leading: Icon(Icons.list),
-                  title: Text(
-                    'Relatório de Produção',
                     style: TextStyle(fontSize: 12),
                   ),
                   onTap: () {},

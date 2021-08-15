@@ -1,76 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:icm_app/components/dropdown.dart';
-import 'package:icm_app/models/visita.dart';
-import 'package:icm_app/util/auxiliar.dart';
-import 'package:icm_app/util/routes.dart';
-import 'package:icm_app/util/storage.dart';
+//import 'package:icm_app/components/dropdown.dart';
+//import 'package:icm_app/models/visita.dart';
+//import 'package:icm_app/util/auxiliar.dart';
+//import 'package:icm_app/util/storage.dart';
 
-class Atividade extends StatefulWidget {
-  @override
-  _FilterState createState() => _FilterState();
-}
-
-class _FilterState extends State<Atividade> {
-  final _form = GlobalKey<FormState>();
-
-  List<DropdownMenuItem<String>> lstMun;
-  List<DropdownMenuItem<String>> lstAtiv;
-
-  Visita vis;
-  final _agenteController = TextEditingController();
-  final dateController = TextEditingController();
-  int ano = DateTime.parse(new DateTime.now().toString()).year;
-
-  @override
-  void initState() {
-    super.initState();
-    Auxiliar.loadData('municipio', null).then((value) {
-      setState(() {
-        lstMun = value;
-      });
-    });
-    Auxiliar.loadData('atividade', null).then((value) {
-      setState(() {
-        lstAtiv = value;
-      });
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    vis = ModalRoute.of(context).settings.arguments;
-    //_loadFormdata(vis);
-    if (vis == null) {
-      vis = Visita(
-        id_visita: 0,
-        id_execucao: 0,
-        id_municipio: 0,
-        id_atividade: 0,
-        dt_cadastro: '',
-        agente: '',
-        id_area: 0,
-        id_censitario: 0,
-        id_quarteirao: 0,
-        tipo_trab: 0,
-        id_focal: 0,
-        id_peri: 0,
-        id_nebul: 0,
-      );
-      _loadPreferences();
-    }
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed
-    dateController.dispose();
-    super.dispose();
-  }
-
+class Atividade extends StatelessWidget {
+  //const ({ Key? key }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    print('create $lstMun');
+    //print('create $lstMun');
     /*  if (lstMun == null || lstAtiv == null) {
       return CircularProgressIndicator();
     }*/
@@ -87,68 +25,16 @@ class _FilterState extends State<Atividade> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Form(
-                key: _form,
+                key: key,
                 child: Column(
                   children: <Widget>[
-                    ListTile(
-                      title: Text(
-                        'Execução:',
-                        style: new TextStyle(
-                          fontSize: 13,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      subtitle: Column(children: <Widget>[
-                        new Row(children: <Widget>[
-                          new Radio(
-                            value: 1,
-                            groupValue: vis.id_execucao,
-                            onChanged: _handleRadioExecChange,
-                          ),
-                          new Text(
-                            'Sucen',
-                            style: new TextStyle(fontSize: 12.0),
-                          ),
-                        ]),
-                        Row(
-                          children: [
-                            new Radio(
-                              value: 2,
-                              groupValue: vis.id_execucao,
-                              onChanged: _handleRadioExecChange,
-                            ),
-                            new Text(
-                              'Controle de Vetores',
-                              style: new TextStyle(
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            new Radio(
-                              value: 3,
-                              groupValue: vis.id_execucao,
-                              onChanged: _handleRadioExecChange,
-                            ),
-                            new Text(
-                              'Agente Comunitário',
-                              style: new TextStyle(
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ]),
-                    ),
                     ListTile(
                       leading: const Icon(Icons.accessibility),
                       title: TextFormField(
                         style: new TextStyle(
                           fontSize: 12,
                         ),
-                        controller: _agenteController,
+                        controller: null,
                         decoration: InputDecoration(labelText: 'Agente'),
                         validator: (value) {
                           if (value.isEmpty) {
@@ -157,37 +43,58 @@ class _FilterState extends State<Atividade> {
                             return null;
                           }
                         },
-                        onSaved: (value) => vis.agente = value,
+                        onSaved: null,
                       ),
                     ),
-                    ListTile(
-                      leading: const Icon(Icons.accessibility),
-                      title: Text(
-                        'Município:',
-                        style: new TextStyle(
-                          fontSize: 13,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      subtitle: (lstMun == null)
+                    /* ListTile(
+                  leading: const Icon(Icons.accessibility),
+                  title: Text(
+                    'Área:',
+                    style: new TextStyle(
+                      fontSize: 13,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  subtitle: (lstArea == null)
+                      ? SizedBox(
+                          child: CircularProgressIndicator(),
+                          height: 50.0,
+                          width: 50.0)
+                      : Dropdown('Área', lstArea, vis.id_area,
+                          update: _updateArea),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.construction),
+                  title: Text(
+                    'Censitário:',
+                    style: new TextStyle(
+                      fontSize: 13,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  subtitle: (lstCens == null)
+                      ? Text('Aguardando...')
+                      : ((vis.id_area != oldArea)
                           ? Center(child: CircularProgressIndicator())
-                          : Dropdown('Municipio', lstMun, vis.id_municipio,
-                          update: _updateMun),
+                          : Dropdown('Censitário:', lstCens, vis.id_censitario,
+                              update: _updateCens)),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.construction),
+                  title: Text(
+                    'Quarteirao:',
+                    style: new TextStyle(
+                      fontSize: 13,
                     ),
-                    ListTile(
-                      leading: const Icon(Icons.accessibility),
-                      title: Text(
-                        'Atividade:',
-                        style: new TextStyle(
-                          fontSize: 13,
-                        ),
-                        textAlign: TextAlign.start,
-                      ),
-                      subtitle: (lstAtiv == null)
+                    textAlign: TextAlign.start,
+                  ),
+                  subtitle: (lstQuart == null)
+                      ? Text('Aguardando...')
+                      : ((vis.id_censitario != oldCens)
                           ? Center(child: CircularProgressIndicator())
-                          : Dropdown('Atividade', lstAtiv, vis.id_atividade,
-                          update: _updateAtiv),
-                    ),
+                          : Dropdown('Quarteirão:', lstQuart, vis.id_quarteirao,
+                              update: _updateQuart)),
+                ),*/
                     ListTile(
                       leading: const Icon(Icons.calendar_today),
                       title: TextFormField(
@@ -195,9 +102,9 @@ class _FilterState extends State<Atividade> {
                           fontSize: 12,
                         ),
                         readOnly: true,
-                        controller: dateController,
+                        controller: null,
                         decoration:
-                        InputDecoration(hintText: 'Data da Atividade'),
+                            InputDecoration(hintText: 'Data da Atividade'),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'A data da atividade deve ser informada!!';
@@ -205,17 +112,17 @@ class _FilterState extends State<Atividade> {
                             return null;
                           }
                         },
-                        onSaved: (value) => vis.dt_cadastro = value,
+                        onSaved: null,
                         onTap: () async {
-                          var date = await showDatePicker(
+                          /* var date = await showDatePicker(
                             context: context,
                             initialDate: DateTime.parse(vis.dt_cadastro),
                             firstDate: DateTime(ano - 2),
                             lastDate: DateTime(ano + 1),
-                          );
-                          await getCurrentDate(
+                          );*/
+                          /* await getCurrentDate(
                               date.toString().substring(0, 10));
-                          dateController.text = vis.dt_cadastro;
+                          dateController.text = vis.dt_cadastro;*/
                           //date.toString().substring(0, 10);
                         },
                       ),
@@ -232,7 +139,7 @@ class _FilterState extends State<Atividade> {
                             },
                             child: Text('Prosseguir'),
                             style:
-                            ElevatedButton.styleFrom(primary: Colors.blue)),
+                                ElevatedButton.styleFrom(primary: Colors.blue)),
                       ),
                     ),
                   ],
@@ -244,16 +151,17 @@ class _FilterState extends State<Atividade> {
       ),
     );
   }
+}
 
-  Future<List<String>> loadDados(String tab) async {
-    await Future.delayed(Duration(seconds: 10), () => print('Tempo ok.'));
-    return ['<15', '15-20', '>20'];
-  }
+Future<List<String>> loadDados(String tab) async {
+  await Future.delayed(Duration(seconds: 10), () => print('Tempo ok.'));
+  return ['<15', '15-20', '>20'];
+}
 
-  void _loadPreferences() async {
-    var ag = '';
-    var ex = 0;
-    vis.dt_cadastro = DateTime.now().toString().substring(0, 10);
+void _loadPreferences() async {
+  var ag = '';
+  var ex = 0;
+  /*  vis.dt_cadastro = DateTime.now().toString().substring(0, 10);
     try {
       ag = await Storage.recupera('agente');
       ex = await Storage.recupera('exec');
@@ -262,11 +170,11 @@ class _FilterState extends State<Atividade> {
         vis.id_execucao = ex;
         _agenteController.text = ag;
       });
-    } catch (e) {}
-  }
+    } catch (e) {}*/
+}
 
-  void _doRegister() async {
-    await _loadChoices();
+void _doRegister() async {
+  /* await _loadChoices();
     if (vis.id_execucao < 1 || vis.id_atividade == 0 || vis.id_municipio == 0) {
       final scaffold = ScaffoldMessenger.of(context);
       scaffold.showSnackBar(SnackBar(
@@ -286,8 +194,6 @@ class _FilterState extends State<Atividade> {
           arguments: vis, //saved,
         );*/
       }
-    }
-  }
 
   void _loadChoices() async {
     try {
@@ -324,5 +230,5 @@ class _FilterState extends State<Atividade> {
     setState(() {
       vis.id_municipio = int.parse(b);
     });
-  }
+  }*/
 }

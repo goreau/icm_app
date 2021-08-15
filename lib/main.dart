@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/views/atividade.dart';
 import 'package:icm_app/views/com_importa.dart';
 import 'package:icm_app/views/principal.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(GetMaterialApp(home: Home()));
 }
 
-class MyApp extends StatelessWidget {
+class Home extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -33,4 +34,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
