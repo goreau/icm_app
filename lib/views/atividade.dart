@@ -37,11 +37,11 @@ class Atividade extends StatelessWidget {
                         controller: null,
                         decoration: InputDecoration(labelText: 'Agente'),
                         validator: (value) {
-                          if (value.isEmpty) {
+                          /*if (value.isEmpty) {
                             return 'O nome é obrigatório!!';
-                          } else {
-                            return null;
-                          }
+                          } else {*/
+                          return null;
+                          // }
                         },
                         onSaved: null,
                       ),
@@ -106,11 +106,11 @@ class Atividade extends StatelessWidget {
                         decoration:
                             InputDecoration(hintText: 'Data da Atividade'),
                         validator: (value) {
-                          if (value.isEmpty) {
-                            return 'A data da atividade deve ser informada!!';
-                          } else {
-                            return null;
-                          }
+                          /*if (value.isEmpty) {
+                            return 'O nome é obrigatório!!';
+                          } else {*/
+                          return null;
+                          // }
                         },
                         onSaved: null,
                         onTap: () async {

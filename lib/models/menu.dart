@@ -5,7 +5,7 @@ class Menu {
   final Icon icon;
 
   const Menu({
-    @required this.nome,
-    this.icon,
+    required this.nome,
+    required this.icon,
   });
 }

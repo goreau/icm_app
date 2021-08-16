@@ -12,38 +12,26 @@ class DbHelper {
 
   // Uso
 
-  // final dbHelper = DatabaseHelper.instance;
+  //final dbHelper = DatabaseHelper.instance;
 
   static final sqlCreate = [
-    "CREATE TABLE municipio(id_municipio INTEGER, nome TEXT, codigo TEXT)",
     "CREATE TABLE area(id_area INTEGER, id_municipio INTEGER, codigo TEXT)",
     "CREATE TABLE censitario(id_censitario INTEGER, id_area INTEGER, codigo TEXT)",
     "CREATE TABLE quarteirao(id_quarteirao INTEGER, id_censitario INTEGER, numero TEXT, sub_numero TEXT)",
-    "CREATE TABLE imovel(id_imovel INTEGER, id_municipio INTEGER, id_quarteirao INTEGER, numero_imovel TEXT, endereco TEXT, id_atividade INTEGER)",
-    "CREATE TABLE grupo_rec(id_grupo_rec INTEGER, codigo TEXT, nome TEXT)",
-    "CREATE TABLE tipo_rec(id_tipo_rec INTEGER, id_grupo_rec INTEGER, nome TEXT)",
-    "CREATE TABLE atividade(id_atividade INTEGER, nome TEXT, grupo INTEGER)",
-    "CREATE TABLE produto(id_produto INTEGER, codigo TEXT, nome TEXT, tipo_uso INTEGER)",
   ];
   static final tabelas = {
-    "municipio",
     "area",
     "censitario",
     "quarteirao",
-    "imovel",
-    "grupo_rec",
-    "tipo_rec",
-    "atividade",
-    "produto"
   };
 
   // torna esta classe singleton
   DbHelper._privateConstructor();
   static final DbHelper instance = DbHelper._privateConstructor();
   // tem somente uma referência ao banco de dados
-  static Database _database;
+  static Database? _database;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database != null) {
       return _database;
     }
@@ -88,38 +76,38 @@ class DbHelper {
   }
 
   Future<int> insert(Map<String, dynamic> row, String table) async {
-    Database db = await instance.database;
-    return await db.insert(table, row);
+    Database? db = await instance.database;
+    return await db!.insert(table, row);
   }
 
   // Todas as linhas são retornadas como uma lista de mapas, onde cada mapa é
   // uma lista de valores-chave de colunas.
   Future<List<Map<String, dynamic>>> queryAllRows(String table) async {
-    Database db = await instance.database;
-    return await db.query(table);
+    Database? db = await instance.database;
+    return await db!.query(table);
   }
 
-  Future<int> queryRowCount(String table) async {
-    Database db = await instance.database;
+  Future<int?> queryRowCount(String table) async {
+    Database? db = await instance.database;
     return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM $table'));
+        await db!.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
   Future<int> update(Map<String, dynamic> row, String table, int id) async {
-    Database db = await instance.database;
+    Database? db = await instance.database;
     String idField = 'id_$table';
-    return await db.update(table, row, where: '$idField = ?', whereArgs: [id]);
+    return await db!.update(table, row, where: '$idField = ?', whereArgs: [id]);
   }
 
   Future<int> delete(int id, String table) async {
-    Database db = await instance.database;
+    Database? db = await instance.database;
     String idField = 'id_$table';
-    return await db.delete(table, where: '$idField = ?', whereArgs: [id]);
+    return await db!.delete(table, where: '$idField = ?', whereArgs: [id]);
   }
 
-  Future<void> limpa(String table) async {
-    Database db = await instance.database;
-    return await db.delete(table);
+  Future<int> limpa(String table) async {
+    Database? db = await instance.database;
+    return await db!.delete(table);
   }
 
   Future<void> _persiste(Database db) async {
@@ -149,7 +137,7 @@ class DbHelper {
   }
 
   Future<List<Map>> qryCombo(String tabela, filtro) async {
-    Database db = await instance.database;
+    Database? db = await instance.database;
     String sql;
     if (tabela == 'quarteirao') {
       sql = 'SELECT id_$tabela as id, numero as nome FROM $tabela';
@@ -160,6 +148,6 @@ class DbHelper {
     }
     sql += filtro == null ? ' ORDER BY id' : ' WHERE $filtro ORDER BY id';
     //print(sql);
-    return await db.rawQuery(sql);
+    return await db!.rawQuery(sql);
   }
 }

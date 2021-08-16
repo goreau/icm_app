@@ -27,7 +27,7 @@ class Auxiliar {
     return list;
   }
 
-  static DropdownMenuItem<String> getDropDownWidget(Map<String, dynamic> map) {
+  static DropdownMenuItem<String> getDropDownWidget(Map<dynamic, dynamic> map) {
     return DropdownMenuItem<String>(
       child: Text(
         map['nome'],

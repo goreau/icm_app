@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Visita {
-  final int id_visita;
+  /* final int id_visita;
   int id_execucao;
   int id_municipio;
   int id_atividade;
@@ -30,5 +30,5 @@ class Visita {
     this.id_focal,
     this.id_peri,
     this.id_nebul,
-  });
+  });*/
 }

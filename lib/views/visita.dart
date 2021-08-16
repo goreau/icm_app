@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:icm_app/components/steper.dart';
+import 'package:icm_app/controllers/visita.controller.dart';
 
 class Visita extends StatelessWidget {
   //const ({ Key? key }) : super(key: key);
+  final VisitaController crtl = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +30,11 @@ class Visita extends StatelessWidget {
               ),
               decoration: InputDecoration(labelText: 'Ordem'),
               validator: (value) {
-                if (value.isEmpty) {
-                  return 'O número de ordem é obrigatório!!';
-                } else {
-                  return null;
-                }
+                /*if (value.isEmpty) {
+                            return 'O nome é obrigatório!!';
+                          } else {*/
+                return null;
+                // }
               },
               onSaved: null,
             ),
@@ -51,11 +54,11 @@ class Visita extends StatelessWidget {
               ),
               decoration: InputDecoration(labelText: 'Endereço'),
               validator: (value) {
-                if (value.isEmpty) {
-                  return 'O endereço é obrigatório!!';
-                } else {
-                  return null;
-                }
+                /*if (value.isEmpty) {
+                            return 'O nome é obrigatório!!';
+                          } else {*/
+                return null;
+                // }
               },
               onSaved: null,
             ),
@@ -75,11 +78,11 @@ class Visita extends StatelessWidget {
               ),
               decoration: InputDecoration(labelText: 'N Imovel'),
               validator: (value) {
-                if (value.isEmpty) {
-                  return 'O número do imóvel é obrigatório!!';
-                } else {
-                  return null;
-                }
+                /*if (value.isEmpty) {
+                            return 'O nome é obrigatório!!';
+                          } else {*/
+                return null;
+                // }
               },
               onSaved: null,
             ),

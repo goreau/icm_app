@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class CustomStepper extends StatefulWidget {
-  CustomStepper({
-    @required this.lowerLimit,
-    @required this.upperLimit,
-    @required this.stepValue,
-    @required this.iconSize,
-    @required this.value,
-  });
+class CustomStepper extends StatelessWidget {
+  CustomStepper(
+      {required this.lowerLimit,
+      required this.upperLimit,
+      required this.stepValue,
+      required this.iconSize,
+      required this.value});
 
   final int lowerLimit;
   final int upperLimit;
@@ -17,40 +16,21 @@ class CustomStepper extends StatefulWidget {
   int value;
 
   @override
-  _CustomStepperState createState() => _CustomStepperState();
-}
-
-class _CustomStepperState extends State<CustomStepper> {
-  TextEditingController _incController;
-
-  @override
-  void initState() {
-    super.initState();
-    _incController = TextEditingController(text: widget.value.toString());
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RoundedIconButton(
           icon: Icons.remove,
-          iconSize: widget.iconSize,
-          onPress: () {
-            setState(() {
-              widget.value = widget.value == widget.lowerLimit
-                  ? widget.lowerLimit
-                  : widget.value -= widget.stepValue;
-            });
-          },
+          iconSize: 12,
+          onPress: (_) {},
         ),
         Container(
-          width: widget.iconSize,
+          width: 12,
           child: TextField(
-            controller: _incController,
+            controller: null,
             style: TextStyle(
-              fontSize: widget.iconSize * 0.8,
+              fontSize: 12 * 0.8,
             ),
             textAlign: TextAlign.center,
             decoration: InputDecoration(
@@ -66,14 +46,8 @@ class _CustomStepperState extends State<CustomStepper> {
         ),
         RoundedIconButton(
           icon: Icons.add,
-          iconSize: widget.iconSize,
-          onPress: () {
-            setState(() {
-              widget.value = widget.value == widget.upperLimit
-                  ? widget.upperLimit
-                  : widget.value += widget.stepValue;
-            });
-          },
+          iconSize: 12,
+          onPress: () {},
         ),
       ],
     );
@@ -81,8 +55,11 @@ class _CustomStepperState extends State<CustomStepper> {
 }
 
 class RoundedIconButton extends StatelessWidget {
-  RoundedIconButton(
-      {@required this.icon, @required this.onPress, @required this.iconSize});
+  RoundedIconButton({
+    required this.icon,
+    required this.onPress,
+    required this.iconSize,
+  });
 
   final IconData icon;
   final Function onPress;
@@ -91,16 +68,16 @@ class RoundedIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      constraints: BoxConstraints.tightFor(width: iconSize, height: iconSize),
+      constraints: BoxConstraints.tightFor(width: 12, height: 12),
       elevation: 6.0,
-      onPressed: onPress,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(iconSize * 0.2)),
+      onPressed: () {},
+      shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12 * 0.2)),
       fillColor: Color(0xFF65A34A),
       child: Icon(
-        icon,
+        Icons.access_alarm,
         color: Colors.white,
-        size: iconSize * 0.8,
+        size: 12 * 0.8,
       ),
     );
   }

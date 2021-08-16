@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:icm_app/models/menu.dart';
 
 const DUMMY_DATA = {
-  '1': const Menu(
+  /* '1': const Menu(
     nome: 'Home',
     icon: Icon(Icons.home),
   ),
@@ -41,5 +41,5 @@ const DUMMY_DATA = {
   '10': const Menu(
     nome: 'Importar Cadastros',
     icon: Icon(Icons.cloud_download_outlined),
-  ),
+  ),*/
 };
