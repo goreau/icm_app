@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/views/atividade.dart';
 import 'package:icm_app/views/com_importa.dart';
@@ -7,14 +6,14 @@ import 'package:icm_app/views/principal.dart';
 import 'package:icm_app/views/visita.dart';
 
 void main() {
-  runApp(GetMaterialApp(home: Home()));
+  runApp(MaterialApp(home: Home()));
 }
 
 class Home extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       title: 'SisaMob 3',
       theme: ThemeData(
         primarySwatch: Colors.green,
