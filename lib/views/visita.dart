@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:icm_app/components/steper.dart';
 import 'package:icm_app/controllers/visita.controller.dart';
 
-class Visita extends StatelessWidget {
+class ViewVisita extends StatelessWidget {
   //const ({ Key? key }) : super(key: key);
   final VisitaController crtl = Get.find();
 

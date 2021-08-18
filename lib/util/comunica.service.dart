@@ -7,15 +7,9 @@ class ComunicaService {
   final dbHelper = DbHelper.instance;
 
   List<String> entidades = [
-    "municipio",
     "area",
     "censitario",
     "quarteirao",
-    "imovel",
-    "grupo_rec",
-    "tipo_rec",
-    "atividade",
-    "produto"
   ];
 
   Future<String> getCadastro(BuildContext context) async {

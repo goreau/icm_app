@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:icm_app/util/routes.dart';
 
 class Principal extends StatelessWidget {
@@ -64,7 +65,7 @@ class Principal extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.VISITA);
+                    Navigator.of(context).pushNamed(Routes.ATIVIDADE);
                   },
                 ),
               ),
@@ -125,7 +126,8 @@ class Principal extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.COM_IMPORTA);
+                    Get.toNamed(Routes.COM_IMPORTA);
+                    // Navigator.of(context).pushNamed(Routes.COM_IMPORTA);
                   },
                 ),
               ),

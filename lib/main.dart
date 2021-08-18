@@ -4,6 +4,7 @@ import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/views/atividade.dart';
 import 'package:icm_app/views/com_importa.dart';
 import 'package:icm_app/views/principal.dart';
+import 'package:icm_app/views/visita.dart';
 
 void main() {
   runApp(GetMaterialApp(home: Home()));
@@ -22,7 +23,8 @@ class Home extends StatelessWidget {
       routes: {
         Routes.HOME: (_) => Principal(),
         Routes.COM_IMPORTA: (_) => ComImporta(),
-        Routes.VISITA: (_) => Atividade(),
+        Routes.ATIVIDADE: (_) => Atividade(),
+        Routes.VISITA: (_) => ViewVisita(),
       },
       /* builder: (BuildContext context, Widget widget) {
         Widget error = Text('Encontramos um erro....');

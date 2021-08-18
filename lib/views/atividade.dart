@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:icm_app/controllers/visita.controller.dart';
 //import 'package:icm_app/components/dropdown.dart';
 //import 'package:icm_app/models/visita.dart';
 //import 'package:icm_app/util/auxiliar.dart';
 //import 'package:icm_app/util/storage.dart';
 
 class Atividade extends StatelessWidget {
+  final VisitaController ctrl = Get.put(VisitaController());
   //const ({ Key? key }) : super(key: key);
+  int ano = DateTime.parse(new DateTime.now().toString()).year;
+
   @override
   Widget build(BuildContext context) {
-    //print('create $lstMun');
-    /*  if (lstMun == null || lstAtiv == null) {
-      return CircularProgressIndicator();
-    }*/
+    ctrl.loadArea();
+
     return Card(
       elevation: 10,
       child: Container(
@@ -30,71 +33,79 @@ class Atividade extends StatelessWidget {
                   children: <Widget>[
                     ListTile(
                       leading: const Icon(Icons.accessibility),
-                      title: TextFormField(
+                      title: Text(
+                        'Área:',
                         style: new TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                         ),
-                        controller: null,
-                        decoration: InputDecoration(labelText: 'Agente'),
-                        validator: (value) {
-                          /*if (value.isEmpty) {
-                            return 'O nome é obrigatório!!';
-                          } else {*/
-                          return null;
-                          // }
-                        },
-                        onSaved: null,
+                        textAlign: TextAlign.start,
+                      ),
+                      subtitle: Obx(
+                        () => ((ctrl.loadingArea.value)
+                            ? Center(child: CircularProgressIndicator())
+                            : DropdownButton<String>(
+                                hint: Text(''),
+                                value: ctrl.visita.value.idArea,
+                                icon: Icon(Icons.arrow_drop_down),
+                                iconSize: 24,
+                                isExpanded: true,
+                                items: ctrl.lstArea,
+                                onChanged: (value) {
+                                  ctrl.updateArea(value);
+                                },
+                              )),
                       ),
                     ),
-                    /* ListTile(
-                  leading: const Icon(Icons.accessibility),
-                  title: Text(
-                    'Área:',
-                    style: new TextStyle(
-                      fontSize: 13,
+                    ListTile(
+                      leading: const Icon(Icons.accessibility),
+                      title: Text(
+                        'Censitário:',
+                        style: new TextStyle(
+                          fontSize: 13,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      subtitle: Obx(
+                        () => ((ctrl.loadingCens.value)
+                            ? Center(child: CircularProgressIndicator())
+                            : DropdownButton<String>(
+                                hint: Text('Censitário'),
+                                value: ctrl.visita.value.idCensitario,
+                                icon: Icon(Icons.arrow_drop_down),
+                                iconSize: 24,
+                                isExpanded: true,
+                                items: ctrl.lstCens,
+                                onChanged: (value) {
+                                  ctrl.updateCens(value);
+                                },
+                              )),
+                      ),
                     ),
-                    textAlign: TextAlign.start,
-                  ),
-                  subtitle: (lstArea == null)
-                      ? SizedBox(
-                          child: CircularProgressIndicator(),
-                          height: 50.0,
-                          width: 50.0)
-                      : Dropdown('Área', lstArea, vis.id_area,
-                          update: _updateArea),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.construction),
-                  title: Text(
-                    'Censitário:',
-                    style: new TextStyle(
-                      fontSize: 13,
+                    ListTile(
+                      leading: const Icon(Icons.accessibility),
+                      title: Text(
+                        'Quarteirão:',
+                        style: new TextStyle(
+                          fontSize: 13,
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                      subtitle: Obx(
+                        () => ((ctrl.loadingQuart.value)
+                            ? Center(child: CircularProgressIndicator())
+                            : DropdownButton<String>(
+                                hint: Text('Quarteirão'),
+                                value: ctrl.visita.value.idQuarteirao,
+                                icon: Icon(Icons.arrow_drop_down),
+                                iconSize: 24,
+                                isExpanded: true,
+                                items: ctrl.lstQuart,
+                                onChanged: (value) {
+                                  ctrl.updateQuart(value);
+                                },
+                              )),
+                      ),
                     ),
-                    textAlign: TextAlign.start,
-                  ),
-                  subtitle: (lstCens == null)
-                      ? Text('Aguardando...')
-                      : ((vis.id_area != oldArea)
-                          ? Center(child: CircularProgressIndicator())
-                          : Dropdown('Censitário:', lstCens, vis.id_censitario,
-                              update: _updateCens)),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.construction),
-                  title: Text(
-                    'Quarteirao:',
-                    style: new TextStyle(
-                      fontSize: 13,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                  subtitle: (lstQuart == null)
-                      ? Text('Aguardando...')
-                      : ((vis.id_censitario != oldCens)
-                          ? Center(child: CircularProgressIndicator())
-                          : Dropdown('Quarteirão:', lstQuart, vis.id_quarteirao,
-                              update: _updateQuart)),
-                ),*/
                     ListTile(
                       leading: const Icon(Icons.calendar_today),
                       title: TextFormField(
@@ -106,28 +117,46 @@ class Atividade extends StatelessWidget {
                         decoration:
                             InputDecoration(hintText: 'Data da Atividade'),
                         validator: (value) {
-                          /*if (value.isEmpty) {
-                            return 'O nome é obrigatório!!';
-                          } else {*/
-                          return null;
-                          // }
+                          if (value!.isEmpty) {
+                            return 'A data é obrigatória!!';
+                          } else {
+                            return null;
+                          }
                         },
                         onSaved: null,
                         onTap: () async {
-                          /* var date = await showDatePicker(
+                          var date = await showDatePicker(
                             context: context,
-                            initialDate: DateTime.parse(vis.dt_cadastro),
+                            initialDate: DateTime.parse(ctrl.dtCadastro.value),
                             firstDate: DateTime(ano - 2),
                             lastDate: DateTime(ano + 1),
-                          );*/
-                          /* await getCurrentDate(
-                              date.toString().substring(0, 10));
-                          dateController.text = vis.dt_cadastro;*/
-                          //date.toString().substring(0, 10);
+                          );
+                          await ctrl
+                              .getCurrentDate(date.toString().substring(0, 10));
+                          //ctrl.dateController.value = ctrl.dtCadastro.value;
+                          date.toString().substring(0, 10);
                         },
                       ),
                     ),
-                    //  SizedBox(height: 16),
+                    ListTile(
+                      leading: const Icon(Icons.accessibility),
+                      title: TextFormField(
+                        style: new TextStyle(
+                          fontSize: 12,
+                        ),
+                        controller: ctrl.agenteController,
+                        decoration: InputDecoration(labelText: 'Agente'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'O nome é obrigatório!!';
+                          } else {
+                            ctrl.visita.value.agente = value;
+                            return null;
+                          }
+                        },
+                        onSaved: null,
+                      ),
+                    ), //  SizedBox(height: 16),
                     Container(
                       padding: EdgeInsets.all(20),
                       child: SizedBox(
@@ -135,7 +164,7 @@ class Atividade extends StatelessWidget {
                         height: 40,
                         child: ElevatedButton(
                             onPressed: () {
-                              _doRegister();
+                              ctrl.doRegister();
                             },
                             child: Text('Prosseguir'),
                             style:
