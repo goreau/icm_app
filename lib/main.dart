@@ -14,7 +14,7 @@ class Home extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'SisaMob 3',
       theme: ThemeData(
         primarySwatch: Colors.green,

@@ -65,7 +65,8 @@ class Principal extends StatelessWidget {
                     style: TextStyle(fontSize: 12),
                   ),
                   onTap: () {
-                    Navigator.of(context).pushNamed(Routes.ATIVIDADE);
+                    //Navigator.of(context).pushNamed(Routes.ATIVIDADE);
+                    Get.toNamed(Routes.ATIVIDADE);
                   },
                 ),
               ),
