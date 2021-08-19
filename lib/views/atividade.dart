@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/controllers/visita.controller.dart';
-//import 'package:icm_app/components/dropdown.dart';
-//import 'package:icm_app/models/visita.dart';
-//import 'package:icm_app/util/auxiliar.dart';
-//import 'package:icm_app/util/storage.dart';
+
 
 class Atividade extends StatelessWidget {
   final VisitaController ctrl = Get.put(VisitaController());
-  //const ({ Key? key }) : super(key: key);
-  int ano = DateTime.parse(new DateTime.now().toString()).year;
+  final int ano = DateTime.parse(new DateTime.now().toString()).year;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +25,6 @@ class Atividade extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Form(
-                  key: key,
                   child: Column(
                     children: <Widget>[
                       ListTile(
@@ -205,62 +200,4 @@ void _loadPreferences() async {
     } catch (e) {}*/
 }
 
-void _doRegister() async {
-  /* await _loadChoices();
-    if (vis.id_execucao < 1 || vis.id_atividade == 0 || vis.id_municipio == 0) {
-      final scaffold = ScaffoldMessenger.of(context);
-      scaffold.showSnackBar(SnackBar(
-        content: const Text('Todos os campos são obrigatórios.'),
-        backgroundColor: Colors.redAccent[700],
-      ));
-      return;
-    }
-    if (_form.currentState.validate()) {
-      _form.currentState.save();
-      Storage.insere('agente', vis.agente);
-      Storage.insere('exec', vis.id_execucao);
 
-      if ([5, 6.7].contains(vis.id_atividade)) {
-        /*Navigator.of(context).pushNamed(
-          Routes.VIS_IMOVEL,
-          arguments: vis, //saved,
-        );*/
-      }
-
-  void _loadChoices() async {
-    try {
-      var atv = await Storage.recupera('atividade');
-      var mnc = await Storage.recupera('municipio');
-      vis.id_atividade = int.parse(atv);
-      vis.id_municipio = int.parse(mnc);
-    } catch (e) {}
-  }
-
-  // Add this function.
-  void getCurrentDate(String date) async {
-    var dateParse = DateTime.parse(date);
-
-    var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
-    setState(() {
-      vis.dt_cadastro = formattedDate.toString();
-    });
-  }
-
-  void _handleRadioExecChange(int value) {
-    setState(() {
-      vis.id_execucao = value;
-    });
-  }
-
-  void _updateAtiv(String b) {
-    setState(() {
-      vis.id_atividade = int.parse(b);
-    });
-  }
-
-  void _updateMun(String b) {
-    setState(() {
-      vis.id_municipio = int.parse(b);
-    });
-  }*/
-}

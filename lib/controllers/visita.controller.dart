@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/models/visita.dart';
 import 'package:icm_app/util/auxiliar.dart';
@@ -17,15 +18,92 @@ class VisitaController extends GetxController {
   var dateController = TextEditingController().obs;
   var dtCadastro = DateTime.now().toString().substring(0, 10).obs;
 
-  var quintal = TextEditingController().obs;
+  //var quintal = TextEditingController().obs;
+  
+  var fachada = 0.obs;
+  var casa = 0.obs;
+  var quintal = 0.obs;
+  var sombraQuintal = 0.obs;
+  var pavQuintal = 0.obs;
+  var telhado = 0.obs;
+  var recipiente = 0.obs;
 
+  var lat = ''.obs;
+  var lng = ''.obs;
+  
   final agenteController = TextEditingController();
+  final ordemController = TextEditingController();
+  final endController = TextEditingController();
+  final numeroController = TextEditingController();
+  final latController = TextEditingController();
+  final lngController = TextEditingController();
 
   var visita = new Visita().obs;
+  
 
-  upQuintal() {
-    this.visita.value.quintal++;
-    this.quintal.value.text = this.visita.value.quintal.toString();
+  Future<void> getPosition() async {
+    Position pos = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    //this.lat.value = pos.latitude.toString();
+    //this.lng.value = pos.longitude.toString();
+    this.latController.text = pos.latitude.toString();
+    this.lngController.text = pos.longitude.toString();
+  }
+
+  alterFachada(val) {
+    if (val == 'p'){
+      this.fachada++;
+    } else if (val == 'm'){
+      this.fachada--;
+    } 
+  }
+
+  alterCasa(val) {
+    if (val == 'p'){
+      this.casa++;
+    } else if (val == 'm'){
+      this.casa--;
+    } 
+  }
+
+  alterQuintal(val) {
+    if (val == 'p'){
+      this.quintal++;
+    } else if (val == 'm'){
+      this.quintal--;
+    } 
+  }
+
+  alterSombraQuintal(val) {
+    if (val == 'p'){
+      this.sombraQuintal++;
+    } else if (val == 'm'){
+      this.sombraQuintal--;
+    } 
+  }
+
+  alterPavQuintal(val) {
+    if (val == 'p'){
+      this.pavQuintal++;
+    } else if (val == 'm'){
+      this.pavQuintal--;
+    } 
+  }
+
+  alterTelhado(val) {
+    if (val == 'p'){
+      this.telhado++;
+    } else if (val == 'm'){
+      this.telhado--;
+    } 
+  }
+
+  alterRecipiente(val) {
+    if (val == 'p'){
+      this.recipiente++;
+    } else if (val == 'm'){
+      this.recipiente--;
+    } 
   }
 
   doRegister() async {
