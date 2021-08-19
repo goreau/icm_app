@@ -5,7 +5,7 @@ import 'package:icm_app/controllers/visita.controller.dart';
 
 class ViewVisita extends StatelessWidget {
   //const ({ Key? key }) : super(key: key);
-  final VisitaController crtl = Get.find();
+  final VisitaController ctrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -87,12 +87,25 @@ class ViewVisita extends StatelessWidget {
               onSaved: null,
             ),
           ),
+          Row(
+            children: [
+              FloatingActionButton(
+                onPressed: () => ctrl.visita.value.quintal++,
+              ),
+              Center(
+                child: Obx(() => Text(ctrl.visita.value.quintal.toString())),
+              ),
+              FloatingActionButton(
+                onPressed: () => ctrl.visita.value.quintal--,
+              ),
+            ],
+          ),
           Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
             CustomStepper(
                 lowerLimit: 0,
                 upperLimit: 100,
                 stepValue: 1,
-                iconSize: 20,
+                iconSize: 40,
                 value: 0),
           ]),
         ]),

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/views/atividade.dart';
 import 'package:icm_app/views/com_importa.dart';

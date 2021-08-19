@@ -17,9 +17,16 @@ class VisitaController extends GetxController {
   var dateController = TextEditingController().obs;
   var dtCadastro = DateTime.now().toString().substring(0, 10).obs;
 
+  var quintal = TextEditingController().obs;
+
   final agenteController = TextEditingController();
 
   var visita = new Visita().obs;
+
+  upQuintal() {
+    this.visita.value.quintal++;
+    this.quintal.value.text = this.visita.value.quintal.toString();
+  }
 
   doRegister() async {
     this.visita.value.agente = this.agenteController.text;

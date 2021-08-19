@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:icm_app/controllers/visita.controller.dart';
 
 // ignore: must_be_immutable
 class CustomStepper extends StatelessWidget {
+  final VisitaController ctrl = Get.find();
+
   CustomStepper(
       {required this.lowerLimit,
       required this.upperLimit,
@@ -21,32 +25,28 @@ class CustomStepper extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RoundedIconButton(
-          icon: Icons.remove,
-          iconSize: 12,
-          onPress: (_) {},
+          icon: Icons.exposure_minus_1,
+          iconSize: this.iconSize,
+          onPress: (_) => ctrl.upQuintal(),
         ),
         Container(
           width: 12,
-          child: TextField(
-            controller: null,
-            style: TextStyle(
-              fontSize: 12 * 0.8,
+          child: Obx(
+            () => TextField(
+              controller: ctrl.quintal.value,
+              style: TextStyle(
+                fontSize: this.iconSize * 0.8,
+              ),
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
             ),
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-            ),
-          ), /*Text( 
-            '${widget.value}',
-            style: TextStyle(
-              fontSize: widget.iconSize * 0.8,
-            ),
-            textAlign: TextAlign.center,
-          ),*/
+          ),
         ),
         RoundedIconButton(
           icon: Icons.add,
-          iconSize: 12,
+          iconSize: this.iconSize,
           onPress: () {},
         ),
       ],

@@ -10,7 +10,7 @@ class Visita {
 
   late int fachada;
   late int casa;
-  late int quintal;
+  late int quintal = 0;
   late int sombraQuintal;
   late int pavQuintal;
   late int telhado;
