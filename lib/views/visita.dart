@@ -4,7 +4,6 @@ import 'package:icm_app/components/steper.dart';
 import 'package:icm_app/controllers/visita.controller.dart';
 
 class ViewVisita extends StatelessWidget {
-  //const ({ Key? key }) : super(key: key);
   final VisitaController ctrl = Get.find();
 
   @override
@@ -18,7 +17,7 @@ class ViewVisita extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
-              leading: const Icon(Icons.accessibility),
+              leading: const Icon(Icons.house),
               title: Text(
                 'Ordem:',
                 style: new TextStyle(
@@ -43,7 +42,7 @@ class ViewVisita extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.accessibility),
+              leading: const Icon(Icons.add_road),
               title: Text(
                 'Endereço:',
                 style: new TextStyle(
@@ -68,7 +67,7 @@ class ViewVisita extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.accessibility),
+              leading: const Icon(Icons.other_houses),
               title: Text(
                 'N Imovel:',
                 style: new TextStyle(
@@ -99,8 +98,10 @@ class ViewVisita extends StatelessWidget {
               endIndent: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 50.0, top: 12.0, right: 12.0),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              padding:
+                  const EdgeInsets.only(left: 50.0, top: 12.0, right: 12.0),
+              child:
+                  Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                 Center(
                   child: Text('Condições:'),
                 ),
@@ -141,7 +142,7 @@ class ViewVisita extends StatelessWidget {
               endIndent: 20,
             ),
             ListTile(
-              leading: const Icon(Icons.accessibility),
+              leading: const Icon(Icons.pin_drop),
               title: Text(
                 'Coordenadas:',
                 style: new TextStyle(
@@ -172,6 +173,19 @@ class ViewVisita extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              child: SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: ElevatedButton(
+                    onPressed: () {
+                      ctrl.doPost();
+                    },
+                    child: Text('Salvar'),
+                    style: ElevatedButton.styleFrom(primary: Colors.blue)),
               ),
             ),
           ],

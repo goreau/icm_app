@@ -18,11 +18,13 @@ class DbHelper {
     "CREATE TABLE area(id_area INTEGER, id_municipio INTEGER, codigo TEXT)",
     "CREATE TABLE censitario(id_censitario INTEGER, id_area INTEGER, codigo TEXT)",
     "CREATE TABLE quarteirao(id_quarteirao INTEGER, id_censitario INTEGER, numero TEXT, sub_numero TEXT)",
+    "CREATE TABLE visita()",
   ];
   static final tabelas = {
     "area",
     "censitario",
     "quarteirao",
+    "visita",
   };
 
   // torna esta classe singleton
@@ -112,7 +114,13 @@ class DbHelper {
 
   Future<void> _persiste(Database db) async {
     //fornecer valor padrão para o campo alterado
-    final persTabela = ["municipio", "area", "censitario", "quarteirao"];
+    final persTabela = [
+      "municipio",
+      "area",
+      "censitario",
+      "quarteirao",
+      "visita"
+    ];
     for (var element in persTabela) {
       var lista = [];
       await db.query(element).then((value) {
@@ -127,7 +135,13 @@ class DbHelper {
 
   _recupera(Database db) async {
     //print(registros);
-    final persTabela = ["municipio", "area", "censitario", "quarteirao"];
+    final persTabela = [
+      "municipio",
+      "area",
+      "censitario",
+      "quarteirao",
+      "visita",
+    ];
     for (var element in persTabela) {
       var tab = registros[element];
       for (var reg in tab) {

@@ -32,18 +32,27 @@ class CustomStepper extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RoundedIconButton(
-                icon: Icons.arrow_upward_sharp,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterFachada('p')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_upward_sharp,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.fachada.value < 5
+                      ? () => {ctrl.alterFachada('p')}
+                      : () {},
+                ),
               ),
               Center(
-                child: Obx(() => Text(ctrl.fachada.toString())), //ctrl.visita.value.quintal.toString()
+                child: Obx(() => Text(ctrl.fachada
+                    .toString())), //ctrl.visita.value.quintal.toString()
               ),
-              RoundedIconButton(
-                icon: Icons.arrow_downward,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterFachada('m')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_downward,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.fachada.value > 0
+                      ? () => {ctrl.alterFachada('m')}
+                      : () {},
+                ),
               ),
             ],
           ),
@@ -57,18 +66,25 @@ class CustomStepper extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RoundedIconButton(
-                icon: Icons.arrow_upward_sharp,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterCasa('p')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_upward_sharp,
+                  iconSize: this.iconSize,
+                  onPress:
+                      ctrl.casa.value < 5 ? () => {ctrl.alterCasa('p')} : () {},
+                ),
               ),
               Center(
-                child: Obx(() => Text(ctrl.casa.toString())), //ctrl.visita.value.quintal.toString()
+                child: Obx(() => Text(ctrl.casa
+                    .toString())), //ctrl.visita.value.quintal.toString()
               ),
-              RoundedIconButton(
-                icon: Icons.arrow_downward,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterCasa('m')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_downward,
+                  iconSize: this.iconSize,
+                  onPress:
+                      ctrl.casa.value < 5 ? () => {ctrl.alterCasa('m')} : () {},
+                ),
               ),
             ],
           ),
@@ -82,18 +98,27 @@ class CustomStepper extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RoundedIconButton(
-                icon: Icons.arrow_upward_sharp,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterQuintal('p')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_upward_sharp,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.quintal.value < 5
+                      ? () => {ctrl.alterQuintal('p')}
+                      : () {},
+                ),
               ),
               Center(
-                child: Obx(() => Text(ctrl.quintal.toString())), //ctrl.visita.value.quintal.toString()
+                child: Obx(() => Text(ctrl.quintal
+                    .toString())), //ctrl.visita.value.quintal.toString()
               ),
-              RoundedIconButton(
-                icon: Icons.arrow_downward,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterQuintal('m')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_downward,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.quintal.value < 5
+                      ? () => {ctrl.alterQuintal('m')}
+                      : () {},
+                ),
               ),
             ],
           ),
@@ -107,18 +132,27 @@ class CustomStepper extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RoundedIconButton(
-                icon: Icons.arrow_upward_sharp,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterSombraQuintal('p')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_upward_sharp,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.sombraQuintal.value < 5
+                      ? () => {ctrl.alterSombraQuintal('p')}
+                      : () {},
+                ),
               ),
               Center(
-                child: Obx(() => Text(ctrl.sombraQuintal.toString())), //ctrl.visita.value.quintal.toString()
+                child: Obx(() => Text(ctrl.sombraQuintal
+                    .toString())), //ctrl.visita.value.quintal.toString()
               ),
-              RoundedIconButton(
-                icon: Icons.arrow_downward,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterSombraQuintal('m')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_downward,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.sombraQuintal.value < 5
+                      ? () => {ctrl.alterSombraQuintal('m')}
+                      : () {},
+                ),
               ),
             ],
           ),
@@ -132,18 +166,27 @@ class CustomStepper extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RoundedIconButton(
-                icon: Icons.arrow_upward_sharp,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterPavQuintal('p')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_upward_sharp,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.pavQuintal.value < 5
+                      ? () => {ctrl.alterPavQuintal('p')}
+                      : () {},
+                ),
               ),
               Center(
-                child: Obx(() => Text(ctrl.pavQuintal.toString())), //ctrl.visita.value.quintal.toString()
+                child: Obx(() => Text(ctrl.pavQuintal
+                    .toString())), //ctrl.visita.value.quintal.toString()
               ),
-              RoundedIconButton(
-                icon: Icons.arrow_downward,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterPavQuintal('m')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_downward,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.pavQuintal.value < 5
+                      ? () => {ctrl.alterPavQuintal('m')}
+                      : () {},
+                ),
               ),
             ],
           ),
@@ -157,18 +200,27 @@ class CustomStepper extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RoundedIconButton(
-                icon: Icons.arrow_upward_sharp,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterTelhado('p')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_upward_sharp,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.telhado.value < 5
+                      ? () => {ctrl.alterTelhado('p')}
+                      : () {},
+                ),
               ),
               Center(
-                child: Obx(() => Text(ctrl.telhado.toString())), //ctrl.visita.value.quintal.toString()
+                child: Obx(() => Text(ctrl.telhado
+                    .toString())), //ctrl.visita.value.quintal.toString()
               ),
-              RoundedIconButton(
-                icon: Icons.arrow_downward,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterTelhado('m')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_downward,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.telhado.value < 5
+                      ? () => {ctrl.alterTelhado('m')}
+                      : () {},
+                ),
               ),
             ],
           ),
@@ -182,18 +234,27 @@ class CustomStepper extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RoundedIconButton(
-                icon: Icons.arrow_upward_sharp,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterRecipiente('p')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_upward_sharp,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.recipiente.value < 5
+                      ? () => {ctrl.alterRecipiente('p')}
+                      : () {},
+                ),
               ),
               Center(
-                child: Obx(() => Text(ctrl.recipiente.toString())), //ctrl.visita.value.quintal.toString()
+                child: Obx(() => Text(ctrl.recipiente
+                    .toString())), //ctrl.visita.value.quintal.toString()
               ),
-              RoundedIconButton(
-                icon: Icons.arrow_downward,
-                iconSize: this.iconSize,
-                onPress: () => {ctrl.alterRecipiente('m')},
+              Obx(
+                () => RoundedIconButton(
+                  icon: Icons.arrow_downward,
+                  iconSize: this.iconSize,
+                  onPress: ctrl.recipiente.value < 5
+                      ? () => {ctrl.alterRecipiente('m')}
+                      : () {},
+                ),
               ),
             ],
           ),
@@ -218,10 +279,12 @@ class RoundedIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      constraints: BoxConstraints.tightFor(width: this.iconSize, height: this.iconSize),
+      constraints:
+          BoxConstraints.tightFor(width: this.iconSize, height: this.iconSize),
       elevation: 6.0,
       onPressed: this.onPress,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12 * 0.2)),
+      shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12 * 0.2)),
       fillColor: Color(0xFF65A34A),
       child: Icon(
         this.icon,

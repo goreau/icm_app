@@ -3,7 +3,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/models/visita.dart';
 import 'package:icm_app/util/auxiliar.dart';
+import 'package:icm_app/util/db_helper.dart';
 import 'package:icm_app/util/routes.dart';
+import 'package:icm_app/util/storage.dart';
 
 class VisitaController extends GetxController {
   var lstArea = <DropdownMenuItem<String>>[].obs;
@@ -15,11 +17,9 @@ class VisitaController extends GetxController {
   var loadingArea = false.obs;
   var loadingCens = false.obs;
   var loadingQuart = false.obs;
-  var dateController = TextEditingController().obs;
+
   var dtCadastro = DateTime.now().toString().substring(0, 10).obs;
 
-  //var quintal = TextEditingController().obs;
-  
   var fachada = 0.obs;
   var casa = 0.obs;
   var quintal = 0.obs;
@@ -28,9 +28,8 @@ class VisitaController extends GetxController {
   var telhado = 0.obs;
   var recipiente = 0.obs;
 
-  var lat = ''.obs;
-  var lng = ''.obs;
-  
+  var dateController = TextEditingController().obs;
+
   final agenteController = TextEditingController();
   final ordemController = TextEditingController();
   final endController = TextEditingController();
@@ -39,78 +38,139 @@ class VisitaController extends GetxController {
   final lngController = TextEditingController();
 
   var visita = new Visita().obs;
-  
+  final dbHelper = DbHelper.instance;
 
   Future<void> getPosition() async {
     Position pos = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    //this.lat.value = pos.latitude.toString();
-    //this.lng.value = pos.longitude.toString();
     this.latController.text = pos.latitude.toString();
     this.lngController.text = pos.longitude.toString();
   }
 
+  loadPreferences() async {
+    try {
+      this.agenteController.text = await Storage.recupera('agente');
+    } catch (e) {}
+  }
+
   alterFachada(val) {
-    if (val == 'p'){
+    if (val == 'p') {
       this.fachada++;
-    } else if (val == 'm'){
+    } else if (val == 'm') {
       this.fachada--;
-    } 
+    }
   }
 
   alterCasa(val) {
-    if (val == 'p'){
+    if (val == 'p') {
       this.casa++;
-    } else if (val == 'm'){
+    } else if (val == 'm') {
       this.casa--;
-    } 
+    }
   }
 
   alterQuintal(val) {
-    if (val == 'p'){
+    if (val == 'p') {
       this.quintal++;
-    } else if (val == 'm'){
+    } else if (val == 'm') {
       this.quintal--;
-    } 
+    }
   }
 
   alterSombraQuintal(val) {
-    if (val == 'p'){
+    if (val == 'p') {
       this.sombraQuintal++;
-    } else if (val == 'm'){
+    } else if (val == 'm') {
       this.sombraQuintal--;
-    } 
+    }
   }
 
   alterPavQuintal(val) {
-    if (val == 'p'){
+    if (val == 'p') {
       this.pavQuintal++;
-    } else if (val == 'm'){
+    } else if (val == 'm') {
       this.pavQuintal--;
-    } 
+    }
   }
 
   alterTelhado(val) {
-    if (val == 'p'){
+    if (val == 'p') {
       this.telhado++;
-    } else if (val == 'm'){
+    } else if (val == 'm') {
       this.telhado--;
-    } 
+    }
   }
 
   alterRecipiente(val) {
-    if (val == 'p'){
+    if (val == 'p') {
       this.recipiente++;
-    } else if (val == 'm'){
+    } else if (val == 'm') {
       this.recipiente--;
-    } 
+    }
   }
 
   doRegister() async {
-    this.visita.value.agente = this.agenteController.text;
+    this.visita.value.agente = this.agenteController.value.text;
     this.visita.value.dtCadastro = dateController.value.text;
-
+    try {
+      Storage.insere('agente', this.agenteController.value.text);
+    } catch (ex) {}
     Get.toNamed(Routes.VISITA);
+  }
+
+  doPost() async {
+    this.visita.value.idMunicipio = 530;
+    this.visita.value.ordem = this.ordemController.text;
+    this.visita.value.endereco = this.endController.text;
+    this.visita.value.numero = this.numeroController.text;
+    this.visita.value.fachada = this.fachada.value;
+    this.visita.value.casa = this.casa.value;
+    this.visita.value.quintal = this.quintal.value;
+    this.visita.value.sombraQuintal = this.sombraQuintal.value;
+    this.visita.value.pavQuintal = this.pavQuintal.value;
+    this.visita.value.telhado = this.telhado.value;
+    this.visita.value.recipiente = this.recipiente.value;
+    this.visita.value.latitude = this.latController.text;
+    this.visita.value.longitude = this.lngController.text;
+
+    Map<String, dynamic> row = new Map();
+    row['id_municipio'] = this.visita.value.idMunicipio;
+    row['id_area'] = this.visita.value.idArea;
+    row['id_censitario'] = this.visita.value.idCensitario;
+    row['id_quarteirao'] = this.visita.value.idQuarteirao;
+    row['dt_cadastro'] = this.visita.value.dtCadastro;
+    row['agente'] = this.visita.value.agente;
+
+    row['ordem'] = this.visita.value.ordem;
+    row['endereco'] = this.visita.value.endereco;
+    row['numero'] = this.visita.value.numero;
+    row['fachada'] = this.visita.value.fachada;
+    row['casa'] = this.visita.value.casa;
+    row['quintal'] = this.visita.value.quintal;
+    row['sombra_quintal'] = this.visita.value.sombraQuintal;
+    row['pav_quintal'] = this.visita.value.pavQuintal;
+    row['telhado'] = this.visita.value.telhado;
+    row['recipiente'] = this.visita.value.recipiente;
+    row['latitude'] = this.visita.value.latitude;
+    row['longitude'] = this.visita.value.longitude;
+
+    await dbHelper.insert(row, 'visita');
+    doClear();
+  }
+
+  doClear() {
+    this.visita.value.ordem = '';
+    this.visita.value.endereco = '';
+    this.visita.value.numero = '';
+    this.visita.value.fachada = 0;
+    this.visita.value.casa = 0;
+    this.visita.value.quintal = 0;
+    this.visita.value.sombraQuintal = 0;
+    this.visita.value.pavQuintal = 0;
+    this.visita.value.telhado = 0;
+    this.visita.value.recipiente = 0;
+    this.visita.value.latitude = '';
+    this.visita.value.longitude = '';
   }
 
   getCurrentDate(String date) async {
@@ -132,6 +192,7 @@ class VisitaController extends GetxController {
   updateArea(value) {
     this.loadingCens.value = true;
     this.visita.value.idArea = value;
+    this.idArea = value;
     Auxiliar.loadData('censitario', ' id_area= ' + value).then((value) {
       this.lstCens.value = value;
       this.loadingCens.value = false;
@@ -140,6 +201,7 @@ class VisitaController extends GetxController {
 
   updateCens(value) {
     this.visita.value.idCensitario = value;
+    this.idCens = value;
     this.loadingQuart.value = true;
     Auxiliar.loadData('quarteirao', ' id_censitario= ' + value).then((value) {
       this.lstQuart.value = value;
@@ -149,5 +211,6 @@ class VisitaController extends GetxController {
 
   updateQuart(value) {
     this.visita.value.idQuarteirao = value;
+    this.idQuart = value;
   }
 }

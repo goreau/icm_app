@@ -8,6 +8,10 @@ class Visita {
   late String idCensitario = '0';
   late String idQuarteirao = '0';
 
+  late String ordem;
+  late String endereco;
+  late String numero;
+
   late int fachada;
   late int casa;
   late int quintal;
