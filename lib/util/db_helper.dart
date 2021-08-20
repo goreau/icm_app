@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DbHelper {
   static final _databaseName = "icm_campinas.db";
-  static final _databaseVersion = 1;
+  static final _databaseVersion = 4;
 
   Map registros = Map<String, dynamic>();
 
@@ -18,7 +18,9 @@ class DbHelper {
     "CREATE TABLE area(id_area INTEGER, id_municipio INTEGER, codigo TEXT)",
     "CREATE TABLE censitario(id_censitario INTEGER, id_area INTEGER, codigo TEXT)",
     "CREATE TABLE quarteirao(id_quarteirao INTEGER, id_censitario INTEGER, numero TEXT, sub_numero TEXT)",
-    "CREATE TABLE visita()",
+    "CREATE TABLE visita(id_visita INTEGER PRIMARY KEY, id_municipio INTEGER, id_area INTEGER, id_censitario INTEGER, id_quarteirao INTEGER, dt_cadastro TEXT, agente TEXT, "+
+      "ordem INTEGER, endereco TEXT, numero TEXT, fachada INTEGER, casa INTEGER, quintal INTEGER, sombra_quintal INTEGER, pav_quintal INTEGER, telhado INTEGER, recipiente INTEGER, "+
+      "latitude REAL, longitude REAL, status INTEGER)",
   ];
   static final tabelas = {
     "area",
@@ -115,7 +117,6 @@ class DbHelper {
   Future<void> _persiste(Database db) async {
     //fornecer valor padrão para o campo alterado
     final persTabela = [
-      "municipio",
       "area",
       "censitario",
       "quarteirao",
@@ -136,7 +137,6 @@ class DbHelper {
   _recupera(Database db) async {
     //print(registros);
     final persTabela = [
-      "municipio",
       "area",
       "censitario",
       "quarteirao",
@@ -164,4 +164,28 @@ class DbHelper {
     //print(sql);
     return await db!.rawQuery(sql);
   }
+
+  Future<int> qryCountEnvio() async {
+    Database? db = await instance.database;
+    String sql = 'SELECT count(*) as qt FROM visita WHERE 1=1';// status=0';
+    var qt = 0;
+    var resultSet = await db!.rawQuery(sql);
+
+    
+    var dbItem = resultSet.first;
+    // Access its id
+    qt = int.parse(dbItem['qt'].toString());
+    
+
+    return qt;
+  }
+
+  Future<List<Map>> qryEnvio() async {
+    Database? db = await instance.database;
+    var resultSet = await db!.query('visita',where: 'status=?',whereArgs: [0]); 
+    
+    return resultSet;
+  }
+
+
 }

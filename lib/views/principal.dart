@@ -38,7 +38,9 @@ class Principal extends StatelessWidget {
                     'Início',
                     style: TextStyle(fontSize: 12),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.HOME);
+                  },
                 ),
               ),
               Container(
@@ -115,7 +117,9 @@ class Principal extends StatelessWidget {
                     'Exportar Produção',
                     style: TextStyle(fontSize: 12),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.COM_EXPORTA);
+                  },
                 ),
               ),
               Container(

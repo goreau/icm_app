@@ -4,16 +4,19 @@ import 'package:icm_app/util/comunica.service.dart';
 
 class ImportaController extends GetxController {
   var retorno = ''.obs;
-  var loaded = false.obs;
+  var loading = false.obs;
 
   ComunicaService _com = new ComunicaService();
 
   Future<void> loadCadastro(BuildContext context) async {
+    loading.value = true;
+    
     try {
-      retorno.value = await _com.getCadastro(context);
+      retorno.value = 'Registros recebidos: \r\n';
+      retorno.value += await _com.getCadastro(context);
     } catch (Exception) {
       retorno.value = 'Erro criando lista:' + Exception.toString();
     }
-    loaded.value = true;
+    loading.value = false;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'db_helper.dart';
@@ -25,6 +27,28 @@ class Auxiliar {
       list.add(element);
     });
     return list;
+  }
+
+  static Future<String> checkEnvio() async {
+    final db = DbHelper.instance;
+    
+    var ret = await db.qryCountEnvio();
+
+    String list = '=> ' + (ret > 0 ? ret.toString()+' registros a sincronizar' : 'Nenhum registro  sincronizar');
+    return list;
+  }
+
+  static Future<Map<String, String>> loadEnvio() async {
+    final db = DbHelper.instance;
+    
+    var ret = await db.qryEnvio();
+    var dados = [];
+    ret.forEach((row) => {
+      dados.add(row)
+    });
+    var send = {'visita': jsonEncode(dados)};
+    
+    return send;
   }
 
   static DropdownMenuItem<String> getDropDownWidget(Map<dynamic, dynamic> map) {

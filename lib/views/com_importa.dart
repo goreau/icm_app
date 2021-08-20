@@ -16,16 +16,20 @@ class ComImporta extends StatelessWidget {
           SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.all(20),
-              child: ElevatedButton(
-                  onPressed: () {
-                    ctrl.loadCadastro(context);
-                  },
-                  child: Text('Carregar'),
-                  style: ElevatedButton.styleFrom(primary: Colors.blue)),
+              child:  Obx(() {
+                return ctrl.loading.value == true
+                ? ElevatedButton(
+                    onPressed: () {
+                      ctrl.loadCadastro(context);
+                    },
+                    child: Text('Carregar'),
+                    style: ElevatedButton.styleFrom(primary: Colors.blue),)
+                : Text('Aguarde...');
+                }),
             ),
           ),
           Obx(() {
-            return ctrl.loaded.value == false
+            return ctrl.loading.value == true
                 ? Expanded(
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
