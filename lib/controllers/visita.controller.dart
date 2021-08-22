@@ -8,6 +8,8 @@ import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/util/storage.dart';
 
 class VisitaController extends GetxController {
+  var editId = 0;
+
   var lstArea = <DropdownMenuItem<String>>[].obs;
   var lstCens = <DropdownMenuItem<String>>[].obs;
   var lstQuart = <DropdownMenuItem<String>>[].obs;
@@ -18,6 +20,8 @@ class VisitaController extends GetxController {
   var loadingCens = false.obs;
   var loadingQuart = false.obs;
   var ordem = 1;
+
+  var clearAll = false.obs;
 
   var dtCadastro = DateTime.now().toString().substring(0, 10).obs;
 
@@ -40,6 +44,33 @@ class VisitaController extends GetxController {
 
   var visita = new Visita().obs;
   final dbHelper = DbHelper.instance;
+
+  initObj(int id) async {
+    editId = id;
+    final db = DbHelper.instance;
+
+    var json = await db.queryObj('visita', id);
+    //visita.value.fromJson(json);
+    //idMunicipio = int.parse(json['id_municipio'].toString());
+    idArea.value = json['id_area'].toString();
+    idCens.value = json['id_censitario'].toString();
+    idQuart.value = json['id_quarteirao'].toString();
+    dtCadastro.value = json['dt_cadastro'];
+    dateController.value.text = dtCadastro.value;
+    agenteController.text = json['agente'].toString();
+    ordemController.text = json['ordem'].toString();
+    endController.text = json['endereco'].toString();
+    numeroController.text = json['numero'].toString();
+    fachada.value = int.parse(json['fachada'].toString());
+    casa.value = int.parse(json['casa'].toString());
+    quintal.value = int.parse(json['quintal'].toString());
+    sombraQuintal.value = int.parse(json['sombra_quintal'].toString());
+    pavQuintal.value = int.parse(json['pav_quintal'].toString());
+    telhado.value = int.parse(json['telhado'].toString());
+    recipiente.value = int.parse(json['recipiente'].toString());
+    latController.text = json['latitude'].toString();
+    lngController.text = json['longitude'].toString();
+  }
 
   Future<void> getPosition() async {
     Position pos = await Geolocator.getCurrentPosition(
@@ -120,7 +151,7 @@ class VisitaController extends GetxController {
     Get.toNamed(Routes.VISITA);
   }
 
-  doPost() async {
+  doPost(BuildContext context) async {
     this.visita.value.idMunicipio = 252;
     this.visita.value.ordem = this.ordemController.text;
     this.visita.value.endereco = this.endController.text;
@@ -158,9 +189,16 @@ class VisitaController extends GetxController {
     row['status'] = 0;
 
     int id = await dbHelper.insert(row, 'visita');
-    if (id>0){
+    if (id > 0) {
       this.ordem++;
       doClear();
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: const Text('Registro inserido.'),
+          backgroundColor: Colors.green[900],
+        ),
+      );
     }
   }
 
@@ -230,5 +268,18 @@ class VisitaController extends GetxController {
   updateQuart(value) {
     this.visita.value.idQuarteirao = value;
     this.idQuart.value = value;
+  }
+
+  limpaVisitas(BuildContext context) {
+    final db = DbHelper.instance;
+    var tipo = clearAll.value ? 1 : 2;
+    var qt = db.limpaVisita(tipo);
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(qt.toString() + 'Registros excluidos.'),
+        backgroundColor: Colors.green[900],
+      ),
+    );
   }
 }

@@ -1,12 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:icm_app/models/visita.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DbHelper {
   static final _databaseName = "icm_campinas.db";
-  static final _databaseVersion = 4;
+  static final _databaseVersion = 5;
 
   Map registros = Map<String, dynamic>();
 
@@ -18,9 +20,9 @@ class DbHelper {
     "CREATE TABLE area(id_area INTEGER, id_municipio INTEGER, codigo TEXT)",
     "CREATE TABLE censitario(id_censitario INTEGER, id_area INTEGER, codigo TEXT)",
     "CREATE TABLE quarteirao(id_quarteirao INTEGER, id_censitario INTEGER, numero TEXT, sub_numero TEXT)",
-    "CREATE TABLE visita(id_visita INTEGER PRIMARY KEY, id_municipio INTEGER, id_area INTEGER, id_censitario INTEGER, id_quarteirao INTEGER, dt_cadastro TEXT, agente TEXT, "+
-      "ordem INTEGER, endereco TEXT, numero TEXT, fachada INTEGER, casa INTEGER, quintal INTEGER, sombra_quintal INTEGER, pav_quintal INTEGER, telhado INTEGER, recipiente INTEGER, "+
-      "latitude REAL, longitude REAL, status INTEGER)",
+    "CREATE TABLE visita(id_visita INTEGER PRIMARY KEY, id_municipio INTEGER, id_area INTEGER, id_censitario INTEGER, id_quarteirao INTEGER, dt_cadastro TEXT, agente TEXT, " +
+        "ordem INTEGER, endereco TEXT, numero TEXT, fachada INTEGER, casa INTEGER, quintal INTEGER, sombra_quintal INTEGER, pav_quintal INTEGER, telhado INTEGER, recipiente INTEGER, " +
+        "latitude REAL, longitude REAL, status INTEGER)",
   ];
   static final tabelas = {
     "area",
@@ -57,12 +59,12 @@ class DbHelper {
   }
 
   Future _onUpgrade(Database db, int version, int newVersion) async {
-    await _persiste(db);
+    // await _persiste(db);
     for (var e in tabelas) {
       await db.execute("DROP TABLE IF EXISTS $e");
     }
     await _onCreate(db, newVersion);
-    _recupera(db);
+    //  _recupera(db);
   }
 
   // Código SQL para criar o banco de dados e as tabelas
@@ -91,6 +93,13 @@ class DbHelper {
     return await db!.query(table);
   }
 
+  Future<Map<String, dynamic>> queryObj(String table, int id) async {
+    Database? db = await instance.database;
+    var resultset =
+        await db!.query(table, where: 'id_visita = ?', whereArgs: [id]);
+    return resultset[0];
+  }
+
   Future<int?> queryRowCount(String table) async {
     Database? db = await instance.database;
     return Sqflite.firstIntValue(
@@ -114,14 +123,18 @@ class DbHelper {
     return await db!.delete(table);
   }
 
+  Future<int> limpaVisita(int tipo) async {
+    Database? db = await instance.database;
+    if (tipo == 1) {
+      return await db!.delete('visita');
+    } else {
+      return await db!.delete('visita', where: 'status = ?', whereArgs: [0]);
+    }
+  }
+
   Future<void> _persiste(Database db) async {
     //fornecer valor padrão para o campo alterado
-    final persTabela = [
-      "area",
-      "censitario",
-      "quarteirao",
-      "visita"
-    ];
+    final persTabela = ["area", "censitario", "quarteirao", "visita"];
     for (var element in persTabela) {
       var lista = [];
       await db.query(element).then((value) {
@@ -132,6 +145,33 @@ class DbHelper {
         registros[element] = lista;
       });
     }
+  }
+
+  Future<List<LstMaster>> consultaVisitasMaster() async {
+    Database? db = await instance.database;
+    var sql =
+        'SELECT v.dt_cadastro, a.codigo as area, q.id_quarteirao as id_quadra, q.numero as quadra, v.status FROM visita v join area a on v.id_area=a.id_area' +
+            ' join quarteirao q on v.id_quarteirao=q.id_quarteirao GROUP BY v.dt_cadastro, a.codigo, q.id_quarteirao, q.numero, v.status';
+    List<Map<String, dynamic>> resultSet = await db!.rawQuery(sql);
+
+    List<LstMaster> list = new List.generate(resultSet.length, (index) {
+      return LstMaster.fromJson(resultSet[index]);
+    });
+
+    return list;
+  }
+
+  Future<List<LstDetail>> consultaVisitasDetail(int id) async {
+    Database? db = await instance.database;
+
+    List<Map<String, dynamic>> resultSet =
+        await db!.query('visita', where: 'id_quarteirao=?', whereArgs: [id]);
+
+    List<LstDetail> list = new List.generate(resultSet.length, (index) {
+      return LstDetail.fromJson(resultSet[index]);
+    });
+
+    return list;
   }
 
   _recupera(Database db) async {
@@ -167,25 +207,32 @@ class DbHelper {
 
   Future<int> qryCountEnvio() async {
     Database? db = await instance.database;
-    String sql = 'SELECT count(*) as qt FROM visita WHERE 1=1';// status=0';
+    String sql = 'SELECT count(*) as qt FROM visita WHERE status=0';
     var qt = 0;
     var resultSet = await db!.rawQuery(sql);
 
-    
     var dbItem = resultSet.first;
     // Access its id
     qt = int.parse(dbItem['qt'].toString());
-    
 
     return qt;
   }
 
   Future<List<Map>> qryEnvio() async {
     Database? db = await instance.database;
-    var resultSet = await db!.query('visita',where: 'status=?',whereArgs: [0]); 
-    
+    var resultSet =
+        await db!.query('visita', where: 'status=?', whereArgs: [0]);
+
     return resultSet;
   }
 
+  Future<int> updateStatus(linha) async {
+    Database? db = await instance.database;
+    var stt = linha['status'];
+    print(stt);
+    var result = await db!.update('visita', {'status': linha['status']},
+        where: 'id_visita = ?', whereArgs: [linha['id']]);
 
+    return result;
+  }
 }

@@ -3,11 +3,16 @@ import 'package:get/get.dart';
 import 'package:icm_app/controllers/visita.controller.dart';
 
 class Atividade extends StatelessWidget {
-  final VisitaController ctrl = Get.put(VisitaController());
+  final VisitaController ctrl = Get.find();
   final int ano = DateTime.parse(new DateTime.now().toString()).year;
+
+  final id = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
+    if (id != null) {
+      ctrl.initObj(id);
+    }
     ctrl.loadArea();
     ctrl.loadPreferences();
 

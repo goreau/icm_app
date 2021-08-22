@@ -12,30 +12,27 @@ class ComunicaService {
     "quarteirao",
   ];
 
-  Future<String> postVisitas(BuildContext context, String dados) async {
+  Future<List<dynamic>> postVisitas(BuildContext context, String dados) async {
     String _url = '';
     String resumo = 'Registros enviados:\n';
-
-    _url = 'http://200.144.1.24/icm_api/dadosVisita';
-
-    final response = await http.post(Uri.parse(_url),body: dados);
-
+    //print(dados);
+    _url = 'http://200.144.1.24/icm_api/exporta.php';
+    var values = {'dados': dados};
+    final response = await http.post(Uri.parse(_url), body: values);
+    var data = [];
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      final dados = data['dados'];
+      data = jsonDecode(response.body);
     } else {
       throw Exception('Falha ao carregar cadastro');
     }
-    return resumo;
+    return data;
   }
-
 
   Future<String> getCadastro(BuildContext context) async {
     String _url = '';
     String resumo = 'Registros recebidos:\n';
 
-    _url =
-        'http://200.144.1.24/dados/Cadastros.php?tipo=cadastro&nivel=2&id=252';
+    _url = 'http://200.144.1.24/icm_api/importa.php?tipo=cadastros';
 
     final response = await http.get(Uri.parse(_url));
 

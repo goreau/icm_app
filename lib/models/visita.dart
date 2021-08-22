@@ -24,6 +24,49 @@ class Visita {
   late String latitude;
   late String longitude;
 
+  /* Visita(
+      this.idVisita,
+      this.idMunicipio,
+      this.idArea,
+      this.idCensitario,
+      this.idQuarteirao,
+      this.dtCadastro,
+      this.agente,
+      this.ordem,
+      this.endereco,
+      this.numero,
+      this.fachada,
+      this.casa,
+      this.quintal,
+      this.sombraQuintal,
+      this.pavQuintal,
+      this.telhado,
+      this.recipiente,
+      this.latitude,
+      this.longitude);*/
+
+  void fromJson(dynamic json) {
+    idVisita = int.parse(json['id_visita'].toString());
+    idMunicipio = int.parse(json['id_municipio'].toString());
+    idArea = json['id_area'].toString();
+    idCensitario = json['id_censitario'].toString();
+    idQuarteirao = json['id_quarteirao'].toString();
+    dtCadastro = json['dt_cadastro'];
+    agente = json['agente'];
+    ordem = json['ordem'].toString();
+    endereco = json['endereco'].toString();
+    numero = json['numero'];
+    fachada = int.parse(json['fachada'].toString());
+    casa = int.parse(json['casa'].toString());
+    quintal = int.parse(json['quintal'].toString());
+    sombraQuintal = int.parse(json['sombra_quintal'].toString());
+    pavQuintal = int.parse(json['pav_quintal'].toString());
+    telhado = int.parse(json['telhado'].toString());
+    recipiente = int.parse(json['recipiente'].toString());
+    latitude = json['latitude'].toString();
+    longitude = json['longitude'].toString();
+  }
+
   Map toJson() => {
         'id_municipio': idMunicipio,
         'id_area': idArea,
@@ -44,33 +87,47 @@ class Visita {
         'latitude': latitude,
         'longitude': longitude,
       };
-
 }
 
-class LstVisita {
-  int id;
-  String dtSolicita;
+class LstMaster {
+  int idQuadra;
+  String area;
+  String quadra;
+  String dtCadastro;
   int status;
-  String operacaoCcb;
-  String valor;
 
-  LstVisita(
-    this.id,
-    this.dtSolicita,
-    this.status,
-    this.operacaoCcb,
-    this.valor,
-  );
+  LstMaster(
+      this.idQuadra, this.area, this.quadra, this.dtCadastro, this.status);
 
-  factory LstVisita.fromJson(dynamic json) {
-    var prop = jsonDecode(json['dados_proposta']);
-    return LstVisita(
-      int.parse(json['id_emprestimo_proposta'].toString()),
-      json['dt_solicita'],
+  factory LstMaster.fromJson(dynamic json) {
+    //var prop = jsonDecode(json['dados_proposta']);
+    return LstMaster(
+      int.parse(json['id_quadra'].toString()),
+      json['area'].toString(),
+      json['quadra'].toString(),
+      json['dt_cadastro'],
       int.parse(json['status'].toString()),
-      json['operacao_ccb'],
-      'R\$ ${prop['valor_requerido'].toStringAsFixed(2)}',
     );
+  }
+}
+
+class LstDetail {
+  int id;
+  int status;
+  String ordem;
+  String endereco;
+
+  LstDetail(this.id, this.status, this.ordem, this.endereco);
+
+  factory LstDetail.fromJson(dynamic json) {
+    //var prop = jsonDecode(json['dados_proposta']);
+    return LstDetail(
+        int.parse(json['id_visita'].toString()),
+        int.parse(json['status'].toString()),
+        json['ordem'].toString(),
+        json['endereco'].toString().trim() +
+            ', ' +
+            json['numero'].toString().trim());
   }
 }
 

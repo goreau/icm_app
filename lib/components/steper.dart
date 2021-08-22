@@ -83,7 +83,7 @@ class CustomStepper extends StatelessWidget {
                   icon: Icons.arrow_downward,
                   iconSize: this.iconSize,
                   onPress:
-                      ctrl.casa.value < 5 ? () => {ctrl.alterCasa('m')} : () {},
+                      ctrl.casa.value > 0 ? () => {ctrl.alterCasa('m')} : () {},
                 ),
               ),
             ],
@@ -115,7 +115,7 @@ class CustomStepper extends StatelessWidget {
                 () => RoundedIconButton(
                   icon: Icons.arrow_downward,
                   iconSize: this.iconSize,
-                  onPress: ctrl.quintal.value < 5
+                  onPress: ctrl.quintal.value > 0
                       ? () => {ctrl.alterQuintal('m')}
                       : () {},
                 ),
@@ -149,7 +149,7 @@ class CustomStepper extends StatelessWidget {
                 () => RoundedIconButton(
                   icon: Icons.arrow_downward,
                   iconSize: this.iconSize,
-                  onPress: ctrl.sombraQuintal.value < 5
+                  onPress: ctrl.sombraQuintal.value > 0
                       ? () => {ctrl.alterSombraQuintal('m')}
                       : () {},
                 ),
@@ -183,7 +183,7 @@ class CustomStepper extends StatelessWidget {
                 () => RoundedIconButton(
                   icon: Icons.arrow_downward,
                   iconSize: this.iconSize,
-                  onPress: ctrl.pavQuintal.value < 5
+                  onPress: ctrl.pavQuintal.value > 0
                       ? () => {ctrl.alterPavQuintal('m')}
                       : () {},
                 ),
@@ -217,7 +217,7 @@ class CustomStepper extends StatelessWidget {
                 () => RoundedIconButton(
                   icon: Icons.arrow_downward,
                   iconSize: this.iconSize,
-                  onPress: ctrl.telhado.value < 5
+                  onPress: ctrl.telhado.value > 0
                       ? () => {ctrl.alterTelhado('m')}
                       : () {},
                 ),
@@ -251,7 +251,7 @@ class CustomStepper extends StatelessWidget {
                 () => RoundedIconButton(
                   icon: Icons.arrow_downward,
                   iconSize: this.iconSize,
-                  onPress: ctrl.recipiente.value < 5
+                  onPress: ctrl.recipiente.value > 0
                       ? () => {ctrl.alterRecipiente('m')}
                       : () {},
                 ),

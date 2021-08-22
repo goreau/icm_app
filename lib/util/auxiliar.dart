@@ -31,24 +31,36 @@ class Auxiliar {
 
   static Future<String> checkEnvio() async {
     final db = DbHelper.instance;
-    
+
     var ret = await db.qryCountEnvio();
 
-    String list = '=> ' + (ret > 0 ? ret.toString()+' registros a sincronizar' : 'Nenhum registro  sincronizar');
+    String list = '=> ' +
+        (ret > 0
+            ? ret.toString() + ' registros a sincronizar'
+            : 'Nenhum registro  sincronizar');
     return list;
   }
 
-  static Future<Map<String, String>> loadEnvio() async {
+  static Future<String> loadEnvio() async {
     final db = DbHelper.instance;
-    
+
     var ret = await db.qryEnvio();
     var dados = [];
-    ret.forEach((row) => {
-      dados.add(row)
-    });
-    var send = {'visita': jsonEncode(dados)};
-    
+    ret.forEach((row) => {dados.add(row)});
+    var send = jsonEncode(dados);
+
     return send;
+  }
+
+  static Future<String> changeStatus(List<dynamic> regs) async {
+    final db = DbHelper.instance;
+    var cont = 0;
+
+    regs.forEach((element) {
+      db.updateStatus(element).then((value) => cont += value);
+    });
+
+    return cont.toString() + ' registros enviados.';
   }
 
   static DropdownMenuItem<String> getDropDownWidget(Map<dynamic, dynamic> map) {

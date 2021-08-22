@@ -80,7 +80,9 @@ class Principal extends StatelessWidget {
                     'Consultar',
                     style: TextStyle(fontSize: 12),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.CONSULTA);
+                  },
                 ),
               ),
               Container(
@@ -91,7 +93,9 @@ class Principal extends StatelessWidget {
                     'Manutenção',
                     style: TextStyle(fontSize: 12),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.LIMPEZA);
+                  },
                 ),
               ),
               Container(

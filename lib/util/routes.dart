@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
+import 'package:icm_app/util/sample.bind.dart';
 import 'package:icm_app/views/atividade.dart';
 import 'package:icm_app/views/com_envio.dart';
 import 'package:icm_app/views/com_importa.dart';
+import 'package:icm_app/views/consulta/consulta.dart';
+import 'package:icm_app/views/manutencao.dart';
 import 'package:icm_app/views/principal.dart';
 import 'package:icm_app/views/visita.dart';
 
@@ -11,12 +14,20 @@ class Routes {
   static const COM_EXPORTA = '/com_exporta';
   static const ATIVIDADE = '/atividade';
   static const VISITA = '/visita';
+  static const CONSULTA = '/consulta';
+  static const LIMPEZA = '/limpeza';
 }
 
 List<GetPage<dynamic>> rotas = [
   GetPage(name: Routes.HOME, page: () => Principal()),
   GetPage(name: Routes.COM_IMPORTA, page: () => ComImporta()),
   GetPage(name: Routes.COM_EXPORTA, page: () => ComExporta()),
-  GetPage(name: Routes.ATIVIDADE, page: () => Atividade()),
-  GetPage(name: Routes.VISITA, page: () => ViewVisita()),
+  GetPage(
+      name: Routes.ATIVIDADE, page: () => Atividade(), binding: SampleBind()),
+  GetPage(name: Routes.VISITA, page: () => ViewVisita(), binding: SampleBind()),
+  GetPage(name: Routes.CONSULTA, page: () => Consulta()),
+  GetPage(
+      name: Routes.LIMPEZA,
+      page: () => ManutencaoView(),
+      binding: SampleBind()),
 ];

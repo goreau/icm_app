@@ -182,7 +182,7 @@ class ViewVisita extends StatelessWidget {
                 height: 40,
                 child: ElevatedButton(
                     onPressed: () {
-                      ctrl.doPost();
+                      ctrl.doPost(context);
                     },
                     child: Text('Salvar'),
                     style: ElevatedButton.styleFrom(primary: Colors.blue)),

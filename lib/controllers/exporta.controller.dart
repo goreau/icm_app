@@ -12,17 +12,18 @@ class ExportaController extends GetxController {
 
   Future<void> postVisitas(BuildContext context) async {
     loading.value = true;
-    
+
     try {
       var dados;
-      Auxiliar.loadEnvio().then((value) {
+      Auxiliar.loadEnvio().then((value) async {
         dados = value;
-      });
 
-      retorno.value = '';
-      resultado.value = await _com.postVisitas(context, dados);
-    } catch (Exception) {
-      retorno.value = 'Erro enviando registros:\r\n' + Exception.toString();
+        retorno.value = '';
+        var ret = await _com.postVisitas(context, dados);
+        resultado.value = await Auxiliar.changeStatus(ret);
+      });
+    } catch (ex) {
+      retorno.value = 'Erro enviando registros:\r\n' + ex.toString();
     }
     loading.value = false;
   }
