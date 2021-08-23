@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
+import 'package:icm_app/colors-constants.dart';
 import 'package:icm_app/controllers/consulta.controller.dart';
 import 'package:icm_app/models/visita.dart';
 import 'package:icm_app/util/routes.dart';
@@ -85,8 +86,17 @@ class ConsultaTile extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: Text('Excluir visita'),
+                      title: Text(
+                        'Excluir visita',
+                        style: new TextStyle(
+                            fontSize: 20,
+                            color: COR_AZUL_MARINHO,
+                            fontWeight: FontWeight.bold),
+                      ),
                       content: Text('Confirma a exclusão dessa visita?'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
                       actions: <Widget>[
                         TextButton(
                           child: Text('Não'),

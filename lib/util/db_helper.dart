@@ -227,8 +227,7 @@ class DbHelper {
 
   Future<int> updateStatus(linha) async {
     Database? db = await instance.database;
-    var stt = linha['status'];
-    print(stt);
+
     var result = await db!.update('visita', {'status': linha['status']},
         where: 'id_visita = ?', whereArgs: [linha['id']]);
 

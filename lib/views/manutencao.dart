@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/controllers/visita.controller.dart';
 
+import '../colors-constants.dart';
+
 class ManutencaoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,9 +28,19 @@ class ManutencaoView extends StatelessWidget {
                           ? showDialog(
                               context: context,
                               builder: (ctx) => AlertDialog(
-                                title: Text('Excluir tudo?'),
+                                title: Text(
+                                  'Excluir tudo?',
+                                  style: new TextStyle(
+                                      fontSize: 20,
+                                      color: COR_AZUL_MARINHO,
+                                      fontWeight: FontWeight.bold),
+                                ),
                                 content: Text(
                                     'Isso irá ecluir registros não sincronizados com a base de dados. \r\n Confirma a operação?'),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                ),
                                 actions: <Widget>[
                                   TextButton(
                                     child: Text('Não'),
@@ -63,9 +75,18 @@ class ManutencaoView extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: Text('Excluir registros?'),
+                      title: Text(
+                        'Excluir registros?',
+                        style: new TextStyle(
+                            fontSize: 20,
+                            color: COR_AZUL_MARINHO,
+                            fontWeight: FontWeight.bold),
+                      ),
                       content: Text(
                           'Essa ação não poderá ser desfeita. Confirma a operação?'),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
                       actions: <Widget>[
                         TextButton(
                           child: Text('Não'),

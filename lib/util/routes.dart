@@ -6,10 +6,12 @@ import 'package:icm_app/views/com_importa.dart';
 import 'package:icm_app/views/consulta/consulta.dart';
 import 'package:icm_app/views/manutencao.dart';
 import 'package:icm_app/views/principal.dart';
+import 'package:icm_app/views/splash.dart';
 import 'package:icm_app/views/visita.dart';
 
 class Routes {
-  static const HOME = '/';
+  static const SPLASH = '/';
+  static const HOME = '/home';
   static const COM_IMPORTA = '/com_importa';
   static const COM_EXPORTA = '/com_exporta';
   static const ATIVIDADE = '/atividade';
@@ -19,6 +21,7 @@ class Routes {
 }
 
 List<GetPage<dynamic>> rotas = [
+  GetPage(name: Routes.SPLASH, page: () => SplashPage()),
   GetPage(name: Routes.HOME, page: () => Principal()),
   GetPage(name: Routes.COM_IMPORTA, page: () => ComImporta()),
   GetPage(name: Routes.COM_EXPORTA, page: () => ComExporta()),
