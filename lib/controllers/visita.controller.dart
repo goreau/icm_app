@@ -50,17 +50,12 @@ class VisitaController extends GetxController {
     final db = DbHelper.instance;
 
     var json = await db.queryObj('visita', id);
-    //visita.value.fromJson(json);
-    //idMunicipio = int.parse(json['id_municipio'].toString());
-    //idArea.value = json['id_area'].toString();
+
     updateArea(json['id_area'].toString());
-    //idCens.value = json['id_censitario'].toString();
     updateCens(json['id_censitario'].toString());
-    //idQuart.value = json['id_quarteirao'].toString();
     updateQuart(json['id_quarteirao'].toString());
     var dt = json['dt_cadastro'].split('-');
     var formattedDate = dt[2] + '-' + dt[1].padLeft(2, '0')+ '-' + dt[0].padLeft(2, '0');
-    //getCurrentDate(formattedDate);
     dtCadastro.value = formattedDate;//json['dt_cadastro'];
     dateController.value.text = json['dt_cadastro'];//dtCadastro.value;
     agenteController.text = json['agente'].toString();
@@ -194,7 +189,14 @@ class VisitaController extends GetxController {
     row['longitude'] = this.visita.value.longitude;
     row['status'] = 0;
 
-    int id = await dbHelper.insert(row, 'visita');
+    int id = 0;
+
+    if (editId == 0){
+      id = await dbHelper.insert(row, 'visita');
+    } else {
+      await dbHelper.update(row, 'visita', editId);
+    }
+    
     if (id > 0) {
       this.ordem++;
       doClear();
@@ -205,6 +207,15 @@ class VisitaController extends GetxController {
           backgroundColor: Colors.green[900],
         ),
       );
+    } else {
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: const Text('Registro atualizado.'),
+          backgroundColor: Colors.green[900],
+        ),
+      );
+      Get.to(Routes.CONSULTA);
     }
   }
 

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/models/visita.dart';
 import 'package:icm_app/util/db_helper.dart';
+import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/views/consulta/consulta-tile.dart';
 
 class ConsultaController extends GetxController {
   var loaded = false.obs;
   List<LstMaster> itens = [];
   List<LstDetail> dets = [];
+
   ConsultaController() {
     inicio();
   }
@@ -19,10 +21,8 @@ class ConsultaController extends GetxController {
   Future<void> loadItens() async {
     try {
       final db = DbHelper.instance;
-      //List<LstVisita> json = await db.consultaVisitas();
+
       itens = await db.consultaVisitasMaster();
-      //var tagObjsJson = json['lista'] as List;
-      //itens = json.map((tagJson) => LstVisita.fromJson(tagJson)).toList();
       loaded.value = true;
     } catch (ex) {
       print('Erro criando lista' + ex.toString());
@@ -44,6 +44,9 @@ class ConsultaController extends GetxController {
   excluiVisita(vis) {
     final db = DbHelper.instance;
     db.delete(vis, 'visita');
+    
+    Get.back(closeOverlays: true);
+    Get.toNamed('/consulta');
   }
 
   List<Widget> getDetail(int id) {
