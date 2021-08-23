@@ -52,11 +52,17 @@ class VisitaController extends GetxController {
     var json = await db.queryObj('visita', id);
     //visita.value.fromJson(json);
     //idMunicipio = int.parse(json['id_municipio'].toString());
-    idArea.value = json['id_area'].toString();
-    idCens.value = json['id_censitario'].toString();
-    idQuart.value = json['id_quarteirao'].toString();
-    dtCadastro.value = json['dt_cadastro'];
-    dateController.value.text = dtCadastro.value;
+    //idArea.value = json['id_area'].toString();
+    updateArea(json['id_area'].toString());
+    //idCens.value = json['id_censitario'].toString();
+    updateCens(json['id_censitario'].toString());
+    //idQuart.value = json['id_quarteirao'].toString();
+    updateQuart(json['id_quarteirao'].toString());
+    var dt = json['dt_cadastro'].split('-');
+    var formattedDate = dt[2] + '-' + dt[1].padLeft(2, '0')+ '-' + dt[0].padLeft(2, '0');
+    //getCurrentDate(formattedDate);
+    dtCadastro.value = formattedDate;//json['dt_cadastro'];
+    dateController.value.text = json['dt_cadastro'];//dtCadastro.value;
     agenteController.text = json['agente'].toString();
     ordemController.text = json['ordem'].toString();
     endController.text = json['endereco'].toString();
@@ -152,7 +158,7 @@ class VisitaController extends GetxController {
   }
 
   doPost(BuildContext context) async {
-    this.visita.value.idMunicipio = 252;
+    this.visita.value.idMunicipio = 252;//Storage.getMunicipio();
     this.visita.value.ordem = this.ordemController.text;
     this.visita.value.endereco = this.endController.text;
     this.visita.value.numero = this.numeroController.text;
@@ -239,7 +245,7 @@ class VisitaController extends GetxController {
 
   loadArea() {
     this.loadingArea.value = true;
-    Auxiliar.loadData('area', ' id_municipio=252 ').then((value) {
+    Auxiliar.loadData('area', ' id_municipio = 252').then((value) {
       this.lstArea.value = value;
       this.loadingArea.value = false;
     });

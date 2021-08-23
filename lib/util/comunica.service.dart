@@ -14,7 +14,7 @@ class ComunicaService {
 
   Future<List<dynamic>> postVisitas(BuildContext context, String dados) async {
     String _url = '';
-    String resumo = 'Registros enviados:\n';
+    
     //print(dados);
     _url = 'http://200.144.1.24/icm_api/exporta.php';
     var values = {'dados': dados};

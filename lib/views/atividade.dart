@@ -104,12 +104,13 @@ class Atividade extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.calendar_today),
-                    title: TextFormField(
+                    title: Obx(
+                      () => (TextFormField(
                       style: new TextStyle(
                         fontSize: 12,
                       ),
                       readOnly: true,
-                      controller: null,
+                      controller: ctrl.dateController.value,
                       decoration:
                           InputDecoration(hintText: 'Data da Atividade'),
                       validator: (value) {
@@ -123,15 +124,17 @@ class Atividade extends StatelessWidget {
                       onTap: () async {
                         var date = await showDatePicker(
                           context: context,
-                          initialDate: DateTime.parse(ctrl.dtCadastro.value),
+                          initialDate: DateTime.parse(ctrl.dtCadastro.value), 
                           firstDate: DateTime(ano - 2),
                           lastDate: DateTime(ano + 1),
                         );
-                        await ctrl
+                        if (date != null){
+                          await ctrl
                             .getCurrentDate(date.toString().substring(0, 10));
-                        date.toString().substring(0, 10);
+                          date.toString().substring(0, 10);
+                        }                         
                       },
-                    ),
+                    )),),
                   ),
                   ListTile(
                     leading: const Icon(Icons.accessibility),

@@ -17,4 +17,8 @@ class Storage {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(key);
   }
+
+  static getMunicipio() async{
+    return 252;
+  }
 }

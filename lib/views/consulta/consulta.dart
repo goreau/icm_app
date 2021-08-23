@@ -4,7 +4,6 @@ import 'package:icm_app/controllers/consulta.controller.dart';
 import 'package:icm_app/models/visita.dart';
 import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/views/consulta/consulta-master.dart';
-import 'package:icm_app/views/consulta/consulta-tile.dart';
 import '../../colors-constants.dart';
 
 class Consulta extends StatelessWidget {

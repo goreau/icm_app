@@ -12,8 +12,7 @@ class ImportaController extends GetxController {
     loading.value = true;
     
     try {
-      retorno.value = 'Registros recebidos: \r\n';
-      retorno.value += await _com.getCadastro(context);
+      retorno.value = await _com.getCadastro(context);
     } catch (Exception) {
       retorno.value = 'Erro criando lista:' + Exception.toString();
     }

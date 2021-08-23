@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Visita {
   late int idVisita;
   late int idMunicipio;

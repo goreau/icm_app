@@ -18,12 +18,19 @@ class ComImporta extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Obx(() {
                 return !ctrl.loading.value == true
-                    ? ElevatedButton(
-                        onPressed: () {
-                          ctrl.loadCadastro(context);
-                        },
-                        child: Text('Carregar'),
-                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                    ? Container(
+                        padding: EdgeInsets.all(20),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 40,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              ctrl.loadCadastro(context);
+                            },
+                            child: Text('Carregar'),
+                            style: ElevatedButton.styleFrom(primary: Colors.blue),
+                          ),
+                        ),
                       )
                     : Text('Aguarde...');
               }),
@@ -32,11 +39,7 @@ class ComImporta extends StatelessWidget {
           Obx(() {
             return ctrl.loading.value == true
                 ? Expanded(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [CircularProgressIndicator()]),
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [CircularProgressIndicator()]),
                   )
                 : Text(ctrl.retorno.value);
           })

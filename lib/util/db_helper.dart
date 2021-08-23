@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:icm_app/models/visita.dart';
@@ -59,12 +58,12 @@ class DbHelper {
   }
 
   Future _onUpgrade(Database db, int version, int newVersion) async {
-    // await _persiste(db);
+    await _persiste(db);
     for (var e in tabelas) {
       await db.execute("DROP TABLE IF EXISTS $e");
     }
     await _onCreate(db, newVersion);
-    //  _recupera(db);
+    _recupera(db);
   }
 
   // Código SQL para criar o banco de dados e as tabelas
@@ -75,7 +74,7 @@ class DbHelper {
       sqlCreate.forEach((e) {
         batch.execute(e);
       });
-      List<dynamic> res = await batch.commit();
+      await batch.commit();
     } catch (e) {
       debugPrint('Erro criando tabela $e');
     }

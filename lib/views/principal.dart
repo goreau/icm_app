@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icm_app/colors-constants.dart';
 import 'package:icm_app/util/routes.dart';
 
 class Principal extends StatelessWidget {
@@ -9,9 +10,8 @@ class Principal extends StatelessWidget {
       appBar: AppBar(
         title: Text('ICM App'),
       ),
-      body: new Container(
-        color: Colors.grey[200],
-        child: new Image.asset('assets/images/aedes.png'),
+      body: new Container(      
+        child: new Image.asset('assets/images/casa.png'),
         alignment: Alignment.center,
       ),
       drawer: Container(
@@ -23,11 +23,11 @@ class Principal extends StatelessWidget {
                 height: 100,
                 child: DrawerHeader(
                   child: ListTile(
-                    leading: Icon(Icons.bug_report),
-                    title: Text('ICM App'),
-                    subtitle: Text('Condição de Moradias'),
+                    leading: SizedBox(child: Image.asset('assets/images/casa.png'),width: 30,height: 30,),
+                    title: Text('ICM App', style: TextStyle(fontSize: 18, color: COR_BRANCO, fontWeight: FontWeight.bold),),
+                    subtitle: Text('Condição de Moradias', style: TextStyle(fontSize: 12, color: COR_BRANCO, fontWeight: FontWeight.bold),),
                   ),
-                  decoration: BoxDecoration(color: Colors.teal),
+                  decoration: BoxDecoration(color: COR_AZUL_MARINHO),
                 ),
               ),
               Container(

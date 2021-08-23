@@ -54,7 +54,8 @@ flutter:
   assets:
     - assets/images/aedes.jfif
     - assets/images/aedes.png
-  #   - images/a_dot_ham.jpeg
+    - assets/images/casa.png
+    - assets/images/casinha.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
