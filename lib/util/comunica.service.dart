@@ -12,7 +12,7 @@ class ComunicaService {
     "quarteirao",
   ];
 
-  Future<List<dynamic>> postVisitas(BuildContext context, String dados) async {
+  Future<List<dynamic>> postOldVisitas(BuildContext context, String dados) async {
     String _url = '';
     
     //print(dados);
@@ -22,6 +22,27 @@ class ComunicaService {
     var data = [];
     if (response.statusCode == 200) {
       data = jsonDecode(response.body);
+    } else {
+      throw Exception('Falha ao carregar cadastro');
+    }
+    return data;
+  }
+
+  Future<List<dynamic>> postVisitas(BuildContext context, String dados, String file) async {
+    String _url = '';
+    
+    //print(dados);
+    _url = 'http://200.144.1.24/icm_api/exporta.php';
+    var values = {'dados': dados};
+    var request = http.MultipartRequest('POST', Uri.parse(_url));
+    request.files.add(await http.MultipartFile.fromPath('picture', file));
+    request.fields['dados'] = dados;
+    var response = await request.send();
+
+    var data = [];
+    if (response.statusCode == 200) {
+      var responseString = await response.stream.bytesToString();
+      data = jsonDecode(responseString);
     } else {
       throw Exception('Falha ao carregar cadastro');
     }

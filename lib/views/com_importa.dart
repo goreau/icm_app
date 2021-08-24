@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icm_app/colors-constants.dart';
 import 'package:icm_app/controllers/importa.controller.dart';
 
 class ComImporta extends StatelessWidget {
@@ -28,7 +29,7 @@ class ComImporta extends StatelessWidget {
                               ctrl.loadCadastro(context);
                             },
                             child: Text('Carregar'),
-                            style: ElevatedButton.styleFrom(primary: Colors.blue),
+                            style: ElevatedButton.styleFrom(primary: COR_AZUL),
                           ),
                         ),
                       )

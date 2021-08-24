@@ -107,7 +107,7 @@ class ManutencaoView extends StatelessWidget {
                   );
                 },
                 child: Text('Limpar'),
-                style: ElevatedButton.styleFrom(primary: Colors.blue),
+                style: ElevatedButton.styleFrom(primary: COR_AZUL),
               ),
             ),
           ],

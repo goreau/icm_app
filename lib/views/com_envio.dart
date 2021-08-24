@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icm_app/colors-constants.dart';
 import 'package:icm_app/controllers/exporta.controller.dart';
 
 class ComExporta extends StatelessWidget {
@@ -32,7 +33,7 @@ class ComExporta extends StatelessWidget {
                           ctrl.postVisitas(context);
                         },
                         child: Text('Enviar os Registros'),
-                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        style: ElevatedButton.styleFrom(primary: COR_AZUL),
                       ),
                     ),
                   )

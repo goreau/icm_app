@@ -6,6 +6,7 @@
     <application android:usesCleartextTraffic="true"/>
    <application
         android:label="ICM App"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

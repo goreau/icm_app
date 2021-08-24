@@ -21,6 +21,7 @@ class Visita {
   late int recipiente;
   late String latitude;
   late String longitude;
+  late String foto;
 
   /* Visita(
       this.idVisita,
@@ -63,6 +64,7 @@ class Visita {
     recipiente = int.parse(json['recipiente'].toString());
     latitude = json['latitude'].toString();
     longitude = json['longitude'].toString();
+    foto = json['foto'].toString();
   }
 
   Map toJson() => {
@@ -84,6 +86,7 @@ class Visita {
         'recipientes': recipiente,
         'latitude': latitude,
         'longitude': longitude,
+        'foto': longitude,
       };
 }
 

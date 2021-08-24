@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:icm_app/colors-constants.dart';
 import 'package:icm_app/controllers/visita.controller.dart';
 
 class Atividade extends StatelessWidget {
@@ -166,7 +167,7 @@ class Atividade extends StatelessWidget {
                           },
                           child: Text('Prosseguir'),
                           style:
-                              ElevatedButton.styleFrom(primary: Colors.blue)),
+                              ElevatedButton.styleFrom(primary: COR_AZUL)),
                     ),
                   ),
                 ],

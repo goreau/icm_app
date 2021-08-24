@@ -21,7 +21,7 @@ class DbHelper {
     "CREATE TABLE quarteirao(id_quarteirao INTEGER, id_censitario INTEGER, numero TEXT, sub_numero TEXT)",
     "CREATE TABLE visita(id_visita INTEGER PRIMARY KEY, id_municipio INTEGER, id_area INTEGER, id_censitario INTEGER, id_quarteirao INTEGER, dt_cadastro TEXT, agente TEXT, " +
         "ordem INTEGER, endereco TEXT, numero TEXT, fachada INTEGER, casa INTEGER, quintal INTEGER, sombra_quintal INTEGER, pav_quintal INTEGER, telhado INTEGER, recipiente INTEGER, " +
-        "latitude REAL, longitude REAL, status INTEGER)",
+        "latitude REAL, longitude REAL, foto TEXT, status INTEGER)",
   ];
   static final tabelas = {
     "area",

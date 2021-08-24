@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/models/visita.dart';
 import 'package:icm_app/util/db_helper.dart';
-import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/views/consulta/consulta-tile.dart';
 
 class ConsultaController extends GetxController {
