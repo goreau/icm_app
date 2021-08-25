@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -55,9 +57,10 @@ class VisitaController extends GetxController {
     updateCens(json['id_censitario'].toString());
     updateQuart(json['id_quarteirao'].toString());
     var dt = json['dt_cadastro'].split('-');
-    var formattedDate = dt[2] + '-' + dt[1].padLeft(2, '0')+ '-' + dt[0].padLeft(2, '0');
-    dtCadastro.value = formattedDate;//json['dt_cadastro'];
-    dateController.value.text = json['dt_cadastro'];//dtCadastro.value;
+    var formattedDate =
+        dt[2] + '-' + dt[1].padLeft(2, '0') + '-' + dt[0].padLeft(2, '0');
+    dtCadastro.value = formattedDate; //json['dt_cadastro'];
+    dateController.value.text = json['dt_cadastro']; //dtCadastro.value;
     agenteController.text = json['agente'].toString();
     ordemController.text = json['ordem'].toString();
     endController.text = json['endereco'].toString();
@@ -152,8 +155,8 @@ class VisitaController extends GetxController {
     Get.toNamed(Routes.VISITA);
   }
 
-  doPost(BuildContext context) async {
-    this.visita.value.idMunicipio = 252;//Storage.getMunicipio();
+  doPost(BuildContext context, File file) async {
+    this.visita.value.idMunicipio = 252; //Storage.getMunicipio();
     this.visita.value.ordem = this.ordemController.text;
     this.visita.value.endereco = this.endController.text;
     this.visita.value.numero = this.numeroController.text;
@@ -166,6 +169,7 @@ class VisitaController extends GetxController {
     this.visita.value.recipiente = this.recipiente.value;
     this.visita.value.latitude = this.latController.text;
     this.visita.value.longitude = this.lngController.text;
+    this.visita.value.foto = file.path;
 
     Map<String, dynamic> row = new Map();
     row['id_municipio'] = this.visita.value.idMunicipio;
@@ -187,16 +191,17 @@ class VisitaController extends GetxController {
     row['recipiente'] = this.visita.value.recipiente;
     row['latitude'] = this.visita.value.latitude;
     row['longitude'] = this.visita.value.longitude;
+    row['foto'] = this.visita.value.foto;
     row['status'] = 0;
 
     int id = 0;
 
-    if (editId == 0){
+    if (editId == 0) {
       id = await dbHelper.insert(row, 'visita');
     } else {
       await dbHelper.update(row, 'visita', editId);
     }
-    
+
     if (id > 0) {
       this.ordem++;
       doClear();
@@ -290,11 +295,12 @@ class VisitaController extends GetxController {
   limpaVisitas(BuildContext context) {
     final db = DbHelper.instance;
     var tipo = clearAll.value ? 1 : 2;
-    var qt = db.limpaVisita(tipo);
+    var qt = 0;
+    db.limpaVisita(tipo).then((value) => qt = value);
     final scaffold = ScaffoldMessenger.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content: Text(qt.toString() + 'Registros excluidos.'),
+        content: Text(qt.toString() + ' Registros excluidos.'),
         backgroundColor: Colors.green[900],
       ),
     );

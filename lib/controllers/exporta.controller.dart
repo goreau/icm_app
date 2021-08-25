@@ -20,7 +20,7 @@ class ExportaController extends GetxController {
 
         retorno.value = '';
         var ret = await _com.postVisitas(context, dados);
-        resultado.value = await Auxiliar.changeStatus(ret);
+        // resultado.value = await Auxiliar.changeStatus(ret);
       });
     } catch (ex) {
       retorno.value = 'Erro enviando registros:\r\n' + ex.toString();

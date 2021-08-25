@@ -2,7 +2,6 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icm_app/colors-constants.dart';
-import 'package:icm_app/components/foto.dart';
 import 'package:icm_app/components/steper.dart';
 import 'package:icm_app/controllers/camera.controller.dart';
 import 'package:icm_app/controllers/visita.controller.dart';
@@ -103,8 +102,10 @@ class ViewVisita extends StatelessWidget {
               endIndent: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 50.0, top: 12.0, right: 12.0),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+              padding:
+                  const EdgeInsets.only(left: 50.0, top: 12.0, right: 12.0),
+              child:
+                  Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
                 Center(
                   child: Text('Condições:'),
                 ),
@@ -186,7 +187,7 @@ class ViewVisita extends StatelessWidget {
                 height: 40,
                 child: ElevatedButton(
                     onPressed: () {
-                      ctrl.doPost(context);
+                      ctrl.doPost(context, cCtrl.arquivo);
                     },
                     child: Text('Salvar'),
                     style: ElevatedButton.styleFrom(primary: COR_AZUL)),

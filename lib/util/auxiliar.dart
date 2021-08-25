@@ -41,26 +41,27 @@ class Auxiliar {
     return list;
   }
 
-  static Future<String> loadEnvio() async {
+  static Future<List<Map<dynamic, dynamic>>> loadEnvio() async {
     final db = DbHelper.instance;
 
     var ret = await db.qryEnvio();
-    var dados = [];
+    /* var dados = [];
     ret.forEach((row) => {dados.add(row)});
-    var send = jsonEncode(dados);
+    var send = jsonEncode(dados);*/
 
-    return send;
+    return ret;
+    //send;
   }
 
-  static Future<String> changeStatus(List<dynamic> regs) async {
+  static Future<int> changeStatus(reg) async {
     final db = DbHelper.instance;
     var cont = 0;
 
-    regs.forEach((element) {
-      db.updateStatus(element).then((value) => cont += value);
-    });
+    //regs.forEach((element) {
+    db.updateStatus(reg).then((value) => cont += value);
+    //});
 
-    return cont.toString() + ' registros enviados.';
+    return cont;
   }
 
   static DropdownMenuItem<String> getDropDownWidget(Map<dynamic, dynamic> map) {
