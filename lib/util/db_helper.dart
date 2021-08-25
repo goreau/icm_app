@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DbHelper {
   static final _databaseName = "icm_campinas.db";
-  static final _databaseVersion = 6;
+  static final _databaseVersion = 7;
 
   Map registros = Map<String, dynamic>();
 

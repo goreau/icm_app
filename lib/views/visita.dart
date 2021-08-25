@@ -8,7 +8,7 @@ import 'package:icm_app/controllers/visita.controller.dart';
 
 class ViewVisita extends StatelessWidget {
   final VisitaController ctrl = Get.find();
-  final MyCameraController cCtrl = Get.put(MyCameraController());
+  final MyCameraController cCtrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -186,8 +186,8 @@ class ViewVisita extends StatelessWidget {
                 width: double.infinity,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {
-                      ctrl.doPost(context, cCtrl.arquivo);
+                    onPressed: () {                     
+                      ctrl.doPost(context, cCtrl.arquivo);                      
                     },
                     child: Text('Salvar'),
                     style: ElevatedButton.styleFrom(primary: COR_AZUL)),

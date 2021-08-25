@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:icm_app/controllers/camera.controller.dart';
 import 'package:icm_app/models/visita.dart';
 import 'package:icm_app/util/auxiliar.dart';
 import 'package:icm_app/util/db_helper.dart';
@@ -10,6 +11,7 @@ import 'package:icm_app/util/routes.dart';
 import 'package:icm_app/util/storage.dart';
 
 class VisitaController extends GetxController {
+  final MyCameraController cCtrl = Get.find();
   var editId = 0;
 
   var lstArea = <DropdownMenuItem<String>>[].obs;
@@ -48,6 +50,7 @@ class VisitaController extends GetxController {
   final dbHelper = DbHelper.instance;
 
   initObj(int id) async {
+    
     editId = id;
     final db = DbHelper.instance;
 
@@ -74,6 +77,8 @@ class VisitaController extends GetxController {
     recipiente.value = int.parse(json['recipiente'].toString());
     latController.text = json['latitude'].toString();
     lngController.text = json['longitude'].toString();
+    cCtrl.arquivo = File(json['foto'].toString());
+    cCtrl.hasFile.value = true;
   }
 
   Future<void> getPosition() async {
@@ -201,6 +206,9 @@ class VisitaController extends GetxController {
     } else {
       await dbHelper.update(row, 'visita', editId);
     }
+
+    cCtrl.hasFile.value = false;
+    cCtrl.initImage();
 
     if (id > 0) {
       this.ordem++;

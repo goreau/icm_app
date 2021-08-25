@@ -21,7 +21,7 @@ class Consulta extends StatelessWidget {
             },
             child: Icon(
               Icons.add,
-              color: Colors.black,
+              color: COR_BRANCO,
             ),
           )
         ],

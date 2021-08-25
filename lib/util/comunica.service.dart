@@ -32,11 +32,11 @@ class ComunicaService {
 
   Future<int> postVisitas(
       BuildContext context, List<Map<dynamic, dynamic>> dados) async {
-    String _url = '';
-    //var rows = jsonDecode(dados);
+
+    String _url = 'http://200.144.1.24/icm_api/exporta.php';
+
     String file;
-    _url = 'http://200.144.1.24/icm_api/exporta.php';
-    var cont = 0;
+    int cont = 0;
 
     dados.forEach((row) async {
       file = row['foto'];
@@ -47,7 +47,12 @@ class ComunicaService {
 
       //var values = {'dados': _row};
       var request = http.MultipartRequest('POST', Uri.parse(_url));
-      request.files.add(await http.MultipartFile.fromPath('file', file));
+      try{
+        request.files.add(await http.MultipartFile.fromPath('file', file));
+      } catch (ex) {
+        print('sem imagem');
+      }
+      
       request.fields['dados'] = _row;
       var response = await request.send();
       if (response.statusCode == 200) {
@@ -58,6 +63,13 @@ class ComunicaService {
         throw Exception('Falha ao carregar cadastro');
       }
     });
+    final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: const Text('Registros enviados.'),
+          backgroundColor: Colors.green[900],
+        ),
+      );
     return cont;
   }
 
