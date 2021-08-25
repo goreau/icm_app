@@ -50,7 +50,6 @@ class VisitaController extends GetxController {
   final dbHelper = DbHelper.instance;
 
   initObj(int id) async {
-    
     editId = id;
     final db = DbHelper.instance;
 
@@ -300,17 +299,19 @@ class VisitaController extends GetxController {
     this.idQuart.value = value;
   }
 
-  limpaVisitas(BuildContext context) {
+  limpaVisitas(BuildContext context) async {
     final db = DbHelper.instance;
     var tipo = clearAll.value ? 1 : 2;
     var qt = 0;
-    db.limpaVisita(tipo).then((value) => qt = value);
-    final scaffold = ScaffoldMessenger.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content: Text(qt.toString() + ' Registros excluidos.'),
-        backgroundColor: Colors.green[900],
-      ),
-    );
+    db.limpaVisita(tipo).then((value) {
+      qt = value;
+      final scaffold = ScaffoldMessenger.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: Text(qt.toString() + ' registros excluidos.'),
+          backgroundColor: Colors.green[900],
+        ),
+      );
+    });
   }
 }

@@ -127,7 +127,7 @@ class DbHelper {
     if (tipo == 1) {
       return await db!.delete('visita');
     } else {
-      return await db!.delete('visita', where: 'status = ?', whereArgs: [0]);
+      return await db!.delete('visita', where: 'status = ?', whereArgs: [1]);
     }
   }
 

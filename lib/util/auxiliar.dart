@@ -59,7 +59,7 @@ class Auxiliar {
 
     //regs.forEach((element) {
     db.updateStatus(reg).then((value) => cont += value);
-    //});
+    // });
 
     return cont;
   }

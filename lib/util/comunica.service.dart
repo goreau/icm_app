@@ -30,13 +30,13 @@ class ComunicaService {
     return data;
   }
 
-  Future<int> postVisitas(
+  Future<int> postVisitasOrig(
       BuildContext context, List<Map<dynamic, dynamic>> dados) async {
-
-    String _url = 'http://200.144.1.24/icm_api/exporta.php';
-
+    String _url = '';
+    //var rows = jsonDecode(dados);
     String file;
-    int cont = 0;
+    _url = 'http://200.144.1.24/icm_api/exporta.php';
+    var cont = 0;
 
     dados.forEach((row) async {
       file = row['foto'];
@@ -47,12 +47,7 @@ class ComunicaService {
 
       //var values = {'dados': _row};
       var request = http.MultipartRequest('POST', Uri.parse(_url));
-      try{
-        request.files.add(await http.MultipartFile.fromPath('file', file));
-      } catch (ex) {
-        print('sem imagem');
-      }
-      
+      request.files.add(await http.MultipartFile.fromPath('file', file));
       request.fields['dados'] = _row;
       var response = await request.send();
       if (response.statusCode == 200) {
@@ -63,14 +58,36 @@ class ComunicaService {
         throw Exception('Falha ao carregar cadastro');
       }
     });
-    final scaffold = ScaffoldMessenger.of(context);
-      scaffold.showSnackBar(
-        SnackBar(
-          content: const Text('Registros enviados.'),
-          backgroundColor: Colors.green[900],
-        ),
-      );
-    return cont;
+    return Future.value(cont);
+  }
+
+  Future<int> postVisitas(
+      BuildContext context, List<Map<dynamic, dynamic>> dados) async {
+    final db = DbHelper.instance;
+    String _url = '';
+    //var rows = jsonDecode(dados);
+    String file;
+    _url = 'http://200.144.1.24/icm_api/exporta.php';
+    var cont = 0;
+
+    dados.forEach((row) async {
+      file = row['foto'];
+
+      String _row = jsonEncode(row);
+
+      var request = http.MultipartRequest('POST', Uri.parse(_url));
+      request.files.add(await http.MultipartFile.fromPath('file', file));
+      request.fields['dados'] = _row;
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        var responseString = await response.stream.bytesToString();
+        var data = jsonDecode(responseString);
+        db.updateStatus(data[0]).then((value) => cont += value);
+      } else {
+        throw Exception('Falha ao carregar cadastro');
+      }
+    });
+    return Future.value(cont);
   }
 
   Future<String> getCadastro(BuildContext context) async {
