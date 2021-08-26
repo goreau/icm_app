@@ -40,7 +40,7 @@ class MyCameraController extends GetxController {
   }
 
   Future<File> getImageFileFromAssets() async {
-    var assets = await rootBundle.loadString('AssetManifest.json');
+   // var assets = await rootBundle.loadString('AssetManifest.json');
 
     String path = 'images/nd.png';
     final byteData = await rootBundle.load('assets/$path');

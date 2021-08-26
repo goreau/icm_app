@@ -202,6 +202,7 @@ class ViewVisita extends StatelessWidget {
         onPressed: () => Get.to(
           CameraCamera(
             onFile: (file) => cCtrl.tirarFoto(file),
+            resolutionPreset: ResolutionPreset.medium,
           ),
         ),
       ),
