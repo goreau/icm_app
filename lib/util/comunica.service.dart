@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:icm_app/util/auxiliar.dart';
 import 'db_helper.dart';
 
 class ComunicaService {
@@ -32,37 +31,6 @@ class ComunicaService {
 
   Future<int> postVisitasOrig(
       BuildContext context, List<Map<dynamic, dynamic>> dados) async {
-    String _url = '';
-    //var rows = jsonDecode(dados);
-    String file;
-    _url = 'http://200.144.1.24/icm_api/exporta.php';
-    var cont = 0;
-
-    dados.forEach((row) async {
-      file = row['foto'];
-      var data; // = [];
-      //row.remove('foto');
-      String _row = jsonEncode(row);
-      //print(_row);
-
-      //var values = {'dados': _row};
-      var request = http.MultipartRequest('POST', Uri.parse(_url));
-      request.files.add(await http.MultipartFile.fromPath('file', file));
-      request.fields['dados'] = _row;
-      var response = await request.send();
-      if (response.statusCode == 200) {
-        var responseString = await response.stream.bytesToString();
-        data = jsonDecode(responseString);
-        cont += await Auxiliar.changeStatus(data[0]);
-      } else {
-        throw Exception('Falha ao carregar cadastro');
-      }
-    });
-    return Future.value(cont);
-  }
-
-  Future<int> postVisitas(
-      BuildContext context, List<Map<dynamic, dynamic>> dados) async {
     final db = DbHelper.instance;
     String _url = '';
     //var rows = jsonDecode(dados);
@@ -83,11 +51,42 @@ class ComunicaService {
         var responseString = await response.stream.bytesToString();
         var data = jsonDecode(responseString);
         db.updateStatus(data[0]).then((value) => cont += value);
+        return Future.value(cont);
       } else {
         throw Exception('Falha ao carregar cadastro');
       }
     });
     return Future.value(cont);
+  }
+
+  Future<int> postVisitas(
+      BuildContext context, Map<dynamic, dynamic> row) async {
+    final db = DbHelper.instance;
+    String _url = '';
+    //var rows = jsonDecode(dados);
+    String file;
+    _url = 'http://200.144.1.24/icm_api/exporta.php';
+    var cont = 0;
+
+    file = row['foto'];
+
+    String _row = jsonEncode(row);
+
+    var request = http.MultipartRequest('POST', Uri.parse(_url));
+    request.files.add(await http.MultipartFile.fromPath('file', file));
+    request.fields['dados'] = _row;
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      var responseString = await response.stream.bytesToString();
+      var data = jsonDecode(responseString);
+      db.updateStatus(data[0]).then((value) {
+        cont += value;
+        return Future.value(cont);
+      });
+    } else {
+      throw Exception('Falha ao carregar cadastro');
+    }
+    return 0;
   }
 
   Future<String> getCadastro(BuildContext context) async {

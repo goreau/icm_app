@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -81,10 +82,17 @@ class VisitaController extends GetxController {
   }
 
   Future<void> getPosition() async {
-    Position pos = await Geolocator.getCurrentPosition(
+    /* Position pos = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     this.latController.text = pos.latitude.toString();
-    this.lngController.text = pos.longitude.toString();
+    this.lngController.text = pos.longitude.toString();*/
+
+    StreamSubscription positionStream =
+        await Geolocator.getPositionStream(distanceFilter: 5)
+            .listen((Position pos) {
+      this.latController.text = pos.latitude.toString();
+      this.lngController.text = pos.longitude.toString();
+    });
   }
 
   loadPreferences() async {

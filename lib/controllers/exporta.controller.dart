@@ -17,10 +17,10 @@ class ExportaController extends GetxController {
       var dados;
       Auxiliar.loadEnvio().then((value) async {
         dados = value;
-
-        retorno.value = '';
-        var ret = await _com.postVisitas(context, dados);
-        resultado.value = ret.toString() + ' registros enviados.';
+        dados.forEach((row) async {
+          await _com.postVisitas(context, row);
+          resultado.value = ' Registros enviados.';
+        });
       });
     } catch (ex) {
       retorno.value = 'Erro enviando registros:\r\n' + ex.toString();
