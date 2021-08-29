@@ -95,6 +95,28 @@ class ViewVisita extends StatelessWidget {
                 onSaved: null,
               ),
             ),
+            ListTile(
+                leading: const Icon(Icons.map_sharp),
+                title: Text(
+                  'Tipo de Imóvel:',
+                  style: new TextStyle(
+                    fontSize: 13,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+                subtitle: Obx(
+                  () => DropdownButton<String>(
+                    hint: Text(''),
+                    value: ctrl.idTipo.value,
+                    icon: Icon(Icons.arrow_drop_down),
+                    iconSize: 24,
+                    isExpanded: true,
+                    items: ctrl.lstTipo,
+                    onChanged: (value) {
+                      ctrl.updateTipo(value);
+                    },
+                  ),
+                )),
             const Divider(
               height: 20,
               thickness: 5,
@@ -186,8 +208,8 @@ class ViewVisita extends StatelessWidget {
                 width: double.infinity,
                 height: 40,
                 child: ElevatedButton(
-                    onPressed: () {                     
-                      ctrl.doPost(context, cCtrl.arquivo);                      
+                    onPressed: () {
+                      ctrl.doPost(context, cCtrl.arquivo);
                     },
                     child: Text('Salvar'),
                     style: ElevatedButton.styleFrom(primary: COR_AZUL)),

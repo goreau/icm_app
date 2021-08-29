@@ -11,6 +11,7 @@ class Visita {
   late String ordem;
   late String endereco;
   late String numero;
+  late String idTipo;
 
   late int fachada;
   late int casa;

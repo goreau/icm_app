@@ -17,6 +17,7 @@ class ExportaController extends GetxController {
       var dados;
       Auxiliar.loadEnvio().then((value) async {
         dados = value;
+        retorno.value = '';
         dados.forEach((row) async {
           await _com.postVisitas(context, row);
           resultado.value = ' Registros enviados.';

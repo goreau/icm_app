@@ -18,9 +18,11 @@ class VisitaController extends GetxController {
   var lstArea = <DropdownMenuItem<String>>[].obs;
   var lstCens = <DropdownMenuItem<String>>[].obs;
   var lstQuart = <DropdownMenuItem<String>>[].obs;
+  var lstTipo = <DropdownMenuItem<String>>[].obs;
   var idArea = '0'.obs;
   var idCens = '0'.obs;
   var idQuart = '0'.obs;
+
   var loadingArea = false.obs;
   var loadingCens = false.obs;
   var loadingQuart = false.obs;
@@ -30,13 +32,14 @@ class VisitaController extends GetxController {
 
   var dtCadastro = DateTime.now().toString().substring(0, 10).obs;
 
-  var fachada = 0.obs;
-  var casa = 0.obs;
-  var quintal = 0.obs;
-  var sombraQuintal = 0.obs;
-  var pavQuintal = 0.obs;
-  var telhado = 0.obs;
-  var recipiente = 0.obs;
+  var idTipo = '1'.obs;
+  var fachada = 1.obs;
+  var casa = 1.obs;
+  var quintal = 1.obs;
+  var sombraQuintal = 1.obs;
+  var pavQuintal = 1.obs;
+  var telhado = 1.obs;
+  var recipiente = 1.obs;
 
   var dateController = TextEditingController().obs;
 
@@ -59,6 +62,8 @@ class VisitaController extends GetxController {
     updateArea(json['id_area'].toString());
     updateCens(json['id_censitario'].toString());
     updateQuart(json['id_quarteirao'].toString());
+    updateTipo(json['idTipo'].toString());
+
     var dt = json['dt_cadastro'].split('-');
     var formattedDate =
         dt[2] + '-' + dt[1].padLeft(2, '0') + '-' + dt[0].padLeft(2, '0');
@@ -172,6 +177,7 @@ class VisitaController extends GetxController {
     this.visita.value.ordem = this.ordemController.text;
     this.visita.value.endereco = this.endController.text;
     this.visita.value.numero = this.numeroController.text;
+
     this.visita.value.fachada = this.fachada.value;
     this.visita.value.casa = this.casa.value;
     this.visita.value.quintal = this.quintal.value;
@@ -194,6 +200,7 @@ class VisitaController extends GetxController {
     row['ordem'] = this.visita.value.ordem;
     row['endereco'] = this.visita.value.endereco;
     row['numero'] = this.visita.value.numero;
+    row['idTipo'] = this.visita.value.idTipo;
     row['fachada'] = this.visita.value.fachada;
     row['casa'] = this.visita.value.casa;
     row['quintal'] = this.visita.value.quintal;
@@ -242,13 +249,13 @@ class VisitaController extends GetxController {
   doClear() {
     this.ordemController.text = this.ordem.toString();
     this.numeroController.text = '';
-    this.fachada.value = 0;
-    this.casa.value = 0;
-    this.quintal.value = 0;
-    this.sombraQuintal.value = 0;
-    this.pavQuintal.value = 0;
-    this.telhado.value = 0;
-    this.recipiente.value = 0;
+    this.fachada.value = 1;
+    this.casa.value = 1;
+    this.quintal.value = 1;
+    this.sombraQuintal.value = 1;
+    this.pavQuintal.value = 1;
+    this.telhado.value = 1;
+    this.recipiente.value = 1;
 
     /*
     this.visita.value.ordem = '';
@@ -282,6 +289,22 @@ class VisitaController extends GetxController {
     });
   }
 
+  loadTypes() {
+    this.lstTipo.value = [
+      DropdownMenuItem(
+        child: Text("Casa"),
+        value: '1',
+      ),
+      DropdownMenuItem(
+        child: Text("Comércio"),
+        value: '2',
+      ),
+      DropdownMenuItem(child: Text("Indústria"), value: '3'),
+      DropdownMenuItem(child: Text("Prédio de apartamentos"), value: '4'),
+      DropdownMenuItem(child: Text("Outros"), value: '5'),
+    ];
+  }
+
   updateArea(value) {
     this.loadingCens.value = true;
     this.visita.value.idArea = value;
@@ -305,6 +328,12 @@ class VisitaController extends GetxController {
   updateQuart(value) {
     this.visita.value.idQuarteirao = value;
     this.idQuart.value = value;
+  }
+
+  updateTipo(value) {
+    value = value == null ? '1' : value;
+    this.visita.value.idTipo = value;
+    this.idTipo.value = value;
   }
 
   limpaVisitas(BuildContext context) async {

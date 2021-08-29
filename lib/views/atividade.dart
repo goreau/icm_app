@@ -15,6 +15,7 @@ class Atividade extends StatelessWidget {
       ctrl.initObj(id);
     }
     ctrl.loadArea();
+    ctrl.loadTypes();
     ctrl.loadPreferences();
 
     return Scaffold(
@@ -107,35 +108,36 @@ class Atividade extends StatelessWidget {
                     leading: const Icon(Icons.calendar_today),
                     title: Obx(
                       () => (TextFormField(
-                      style: new TextStyle(
-                        fontSize: 12,
-                      ),
-                      readOnly: true,
-                      controller: ctrl.dateController.value,
-                      decoration:
-                          InputDecoration(hintText: 'Data da Atividade'),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'A data é obrigatória!!';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: null,
-                      onTap: () async {
-                        var date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.parse(ctrl.dtCadastro.value), 
-                          firstDate: DateTime(ano - 2),
-                          lastDate: DateTime(ano + 1),
-                        );
-                        if (date != null){
-                          await ctrl
-                            .getCurrentDate(date.toString().substring(0, 10));
-                          date.toString().substring(0, 10);
-                        }                         
-                      },
-                    )),),
+                        style: new TextStyle(
+                          fontSize: 12,
+                        ),
+                        readOnly: true,
+                        controller: ctrl.dateController.value,
+                        decoration:
+                            InputDecoration(hintText: 'Data da Atividade'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'A data é obrigatória!!';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: null,
+                        onTap: () async {
+                          var date = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.parse(ctrl.dtCadastro.value),
+                            firstDate: DateTime(ano - 2),
+                            lastDate: DateTime(ano + 1),
+                          );
+                          if (date != null) {
+                            await ctrl.getCurrentDate(
+                                date.toString().substring(0, 10));
+                            date.toString().substring(0, 10);
+                          }
+                        },
+                      )),
+                    ),
                   ),
                   ListTile(
                     leading: const Icon(Icons.accessibility),
@@ -166,8 +168,7 @@ class Atividade extends StatelessWidget {
                             ctrl.doRegister();
                           },
                           child: Text('Prosseguir'),
-                          style:
-                              ElevatedButton.styleFrom(primary: COR_AZUL)),
+                          style: ElevatedButton.styleFrom(primary: COR_AZUL)),
                     ),
                   ),
                 ],

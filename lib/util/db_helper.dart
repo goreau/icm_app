@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DbHelper {
   static final _databaseName = "icm_campinas.db";
-  static final _databaseVersion = 7;
+  static final _databaseVersion = 8;
 
   Map registros = Map<String, dynamic>();
 
@@ -20,7 +20,7 @@ class DbHelper {
     "CREATE TABLE censitario(id_censitario INTEGER, id_area INTEGER, codigo TEXT)",
     "CREATE TABLE quarteirao(id_quarteirao INTEGER, id_censitario INTEGER, numero TEXT, sub_numero TEXT)",
     "CREATE TABLE visita(id_visita INTEGER PRIMARY KEY, id_municipio INTEGER, id_area INTEGER, id_censitario INTEGER, id_quarteirao INTEGER, dt_cadastro TEXT, agente TEXT, " +
-        "ordem INTEGER, endereco TEXT, numero TEXT, fachada INTEGER, casa INTEGER, quintal INTEGER, sombra_quintal INTEGER, pav_quintal INTEGER, telhado INTEGER, recipiente INTEGER, " +
+        "ordem INTEGER, endereco TEXT, numero TEXT, idTipo INTEGER, fachada INTEGER, casa INTEGER, quintal INTEGER, sombra_quintal INTEGER, pav_quintal INTEGER, telhado INTEGER, recipiente INTEGER, " +
         "latitude REAL, longitude REAL, foto TEXT, status INTEGER)",
   ];
   static final tabelas = {
